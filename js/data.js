@@ -13,6 +13,8 @@ game.g_resources = {
     
     "img" : [
         "dialog",
+        "hintergrund",
+        "menu",
 
 
     ],
