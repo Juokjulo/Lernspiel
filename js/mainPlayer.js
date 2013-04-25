@@ -2,7 +2,6 @@
 a player entity
 -------------------------------- */
 var PlayerEntity = me.ObjectEntity.extend({
- 
     /* -----
  
     constructor
@@ -133,11 +132,23 @@ var KayEntity = me.ObjectEntity.extend({
  
     },
     "interact" : function interact(actor) {
-	this.isInteracting = true;
-            game.dialog([
-                "Hi! ndfkdjdsnkhnkhnj njnhn kjnikjsdfdsgvfdcv dscx"," dscxy hdjfetgfd vgrf gtfdv crtfg gfdv trgfd regf grf "
-            ],null);
-	
+    	this.isInteracting = true;
+        if (this.interactionCounter == 0){
+            game.dialog(["Ping"]);
+            console.debug("Vor Ping");
+            console.debug(this.interactionCounter);
+            this.interactionCounter = 1;
+            console.debug("Nach Ping");
+            console.debug(this.interactionCounter);
+        }
+        else {
+            game.dialog(["Pong"]);
+            console.debug("Vor Pong");
+            console.debug(this.interactionCounter);
+    	    this.interactionCounter = 0; 
+            console.debug("Nach Pong");
+            console.debug(this.interactionCounter);
+        }   
     },
     
       onCollision: function(res, obj) {
@@ -150,3 +161,5 @@ var KayEntity = me.ObjectEntity.extend({
     },
 
 });
+
+KayEntity.interactionCounter = 0;
