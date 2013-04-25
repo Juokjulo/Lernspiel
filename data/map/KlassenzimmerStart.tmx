@@ -66,6 +66,13 @@
     <property name="spritewidth" value="32"/>
    </properties>
   </object>
+  <object name="me.LevelEntity" x="128" y="32" width="32" height="64">
+   <properties>
+    <property name="duration" value="250"/>
+    <property name="fade" value="#000000"/>
+    <property name="to" value="Flur1"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="collision" width="16" height="16">
   <data encoding="base64">

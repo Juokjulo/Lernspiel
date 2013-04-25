@@ -20,13 +20,15 @@ game.g_resources = {
     "tileset" : [
         /* klassenzimmer */
         "ZanyZora_Klassenzimmer",
-        "metatiles32x32"
+        "metatiles32x32",
+        "tiles9"
         
     ],
 
     /* Maps from Tiled. */
     "map" : [
-        "klassenzimmerStart"
+        "klassenzimmerStart",
+        "Flur1"
     ],
 
     "icon" : [

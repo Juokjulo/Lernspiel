@@ -47,16 +47,17 @@ var game	=
 		// add our player entity in the entity pool
 		me.entityPool.add("mainPlayer", PlayerEntity);
 		me.entityPool.add("kay", KayEntity);
+		me.entityPool.add("me.LevelEntity", me.LevelEntity);
 			  
 		// enable the keyboard
 		me.input.bindKey(me.input.KEY.LEFT,  "left");
 		me.input.bindKey(me.input.KEY.RIGHT, "right");
 		me.input.bindKey(me.input.KEY.UP,  "up");
 		me.input.bindKey(me.input.KEY.DOWN, "down");
-		me.input.bindKey(me.input.KEY.ENTER, "action");
+		me.input.bindKey(me.input.KEY.ENTER, "action", true);
 		me.sys.gravity=0;
 		
-		
+	
 		// start the game
 		me.state.change(me.state.PLAY);
 	},
@@ -223,7 +224,8 @@ game.PlayScreen = me.ScreenObject.extend(
    onResetEvent: function()
 	{	
       // stuff to reset on state change
-          me.levelDirector.loadLevel("klassenzimmerStart");      
+          me.levelDirector.loadLevel("klassenzimmerStart");
+	   
 	},
 	
 	

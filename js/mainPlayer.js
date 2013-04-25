@@ -153,11 +153,6 @@ var KayEntity = me.ObjectEntity.extend({
     
       onCollision: function(res, obj) {
 
-        // res.y >0 means touched by something on the bottom
-        // which mean at top position for this one
-        if (this.alive && (res.y > 0) && obj.falling) {
-            this.flicker(45);
-        }
     },
 
 });
