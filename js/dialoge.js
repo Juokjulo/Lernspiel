@@ -2,13 +2,13 @@
 /* Dialog box */
 game.dialog = function dialog(script, callback) {
     var background = game.getImage("dialog");
-    var font = new me.Font("Tahoma", 18, "#eee");
+    var font = new me.Font("Tahoma", 18, "#000000");
 
     game.modal = true;
 
     var dialog_box = new game.DialogObject(
         // x, y
-        30,
+        20,
         me.video.getHeight() - background.height - 15,
 
         // Background image.

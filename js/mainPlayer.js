@@ -118,7 +118,7 @@ var KayEntity = me.ObjectEntity.extend({
         this.setVelocity(1, 1);
 	me.debug.renderHitBox = true;
 	this.isInteracting = false;
-    
+        this.name = "Kay";
 	this.addAnimation ("down", [0]);
 	this.addAnimation ("left", [3,4,5]);
 	this.addAnimation ("right", [6,7,8]);
@@ -129,12 +129,13 @@ var KayEntity = me.ObjectEntity.extend({
 	// make it collidable
         this.collidable = true;
 	this.type = me.game.ACTION_OBJECT;
+	
  
     },
     "interact" : function interact(actor) {
     	this.isInteracting = true;
         if (this.interactionCounter == 0){
-            game.dialog(["Ping"]);
+            game.dialog(["Ping uh i u u ju u ju u u ju uv u u u z  uz z z z z  uz u u u  u u u u i u ", "fdsc"]);
             console.debug("Vor Ping");
             console.debug(this.interactionCounter);
             this.interactionCounter = 1;
@@ -148,7 +149,8 @@ var KayEntity = me.ObjectEntity.extend({
     	    this.interactionCounter = 0; 
             console.debug("Nach Pong");
             console.debug(this.interactionCounter);
-        }   
+        }
+	game.fight(this);
     },
     
       onCollision: function(res, obj) {

@@ -15,6 +15,7 @@ game.g_resources = {
         "dialog",
         "hintergrund",
         "menu",
+        "fight"
 
 
     ],
