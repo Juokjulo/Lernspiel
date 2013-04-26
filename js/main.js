@@ -135,29 +135,7 @@ var game	=
 
 };  // game
 
-/* the in game stuff*/
 
-game.PlayScreen = me.ScreenObject.extend(
-{
-
-   onResetEvent: function()
-	{	
-      // stuff to reset on state change
-          me.levelDirector.loadLevel("klassenzimmerStart");
-	},
-	
-	
-	/* ---
-	
-		 action to perform when game is finished (state change)
-		
-		---	*/
-	onDestroyEvent: function()
-	{
-	
-   }
-
-});
 
 
 //bootstrap :)
