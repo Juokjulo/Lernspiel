@@ -1,5 +1,5 @@
 
-var game.username = "k";
-var game.words = "";
-var game.score = 0;
-var game.playtime = 0;
+game.username = "karl";
+game.words = "kenne";
+game.score = 0;
+game.playtime = 0;

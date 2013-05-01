@@ -116,7 +116,7 @@ var KayEntity = me.ObjectEntity.extend({
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(1, 1);
 	this.isInteracting = false;
-    this.name = "Kay";
+    this.username = "Kay";
 	this.addAnimation ("down", [0]);
 	this.addAnimation ("left", [3,4,5]);
 	this.addAnimation ("right", [6,7,8]);
@@ -148,7 +148,7 @@ var KayEntity = me.ObjectEntity.extend({
             console.debug("Nach Pong");
             console.debug(this.interactionCounter);
         }
-	game.fight(this);
+	   game.fight(this);
     },
     
       onCollision: function(res, obj) {
@@ -156,5 +156,6 @@ var KayEntity = me.ObjectEntity.extend({
     },
 
 });
+
 
 KayEntity.interactionCounter = 0;

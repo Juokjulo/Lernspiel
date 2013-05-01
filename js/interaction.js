@@ -2,8 +2,9 @@
 game.fight = function fight(teammate) {
     var background = game.getImage("fight");
     var font = new me.Font("Tahoma", 18, "#000000");
+
     
-    me.state.set(me.state.Info, new game.InfoScreen(20));
+    me.state.set(me.state.Info, new game.InteractionScreen(teammate));
     me.state.change(me.state.Info);
    //  var fight_box = new game.FightObject();
      
@@ -11,13 +12,13 @@ game.fight = function fight(teammate) {
     //me.game.sort.defer(game.sort);
 }
 
-game.InfoScreen = me.ScreenObject.extend(
+game.InteractionScreen = me.ScreenObject.extend(
 {
-	"init" : function init()
+	"init" : function init(teammate)
 	{
-
+		this.teammate = teammate;
         this.parent(true);
-        this.font = new me.Font("Monaco, Courier New", 13, "#aaa");
+        this.font = new me.Font("Monaco, Courier New", 16, "#000");
 
         // Render text to buffer canvas.
         this.canvas = document.createElement("canvas");
@@ -65,6 +66,7 @@ game.InfoScreen = me.ScreenObject.extend(
 
     "draw" : function draw(context) {
     	var background = game.getImage("fight");
+
         context.drawImage(
             background,
             0, ~~this.y,
@@ -72,6 +74,20 @@ game.InfoScreen = me.ScreenObject.extend(
             0, 0,
             c.WIDTH, c.HEIGHT
         );
+
+		this.drawWords(context, this.teammate.username , 30, 10);
+		this.drawWords(context, game.username , 30, 310);
+         
+        
+    },
+
+    "drawWords" : function drawWords(context, message, width, height) {
+    	
+        var w = Math.min(this.font.measureText(context, message).width, c.WIDTH);    
+        context.save();
+		this.font.draw(context, message, width, height);    
+        context.restore();
+
     }
 
 });
