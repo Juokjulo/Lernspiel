@@ -15,7 +15,6 @@ var PlayerEntity = me.ObjectEntity.extend({
         this.parent(x, y, settings);
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(1, 1);
-	me.debug.renderHitBox = true;
 	
 	// adjust the bounding box
 	this.updateColRect(2, 28, 22, 8);
@@ -116,9 +115,8 @@ var KayEntity = me.ObjectEntity.extend({
         this.parent(x, y, settings);
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(1, 1);
-	me.debug.renderHitBox = true;
 	this.isInteracting = false;
-        this.name = "Kay";
+    this.name = "Kay";
 	this.addAnimation ("down", [0]);
 	this.addAnimation ("left", [3,4,5]);
 	this.addAnimation ("right", [6,7,8]);
