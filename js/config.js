@@ -14,7 +14,9 @@ var c = {
     // States
     "STATE_INFO"            : me.state.USER + 0,
     "STATE_INTRO"           : me.state.USER + 1,
-
+ 
+    "INTERIMAGE" : "blue_player", 
+    
     // Keys
     "KEY_APOS"              : 222, // Apostrophe (aka single-quote)
 

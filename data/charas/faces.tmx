@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="3" height="3" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="face2" tilewidth="32" tileheight="32">
+  <image source="face2.png" width="384" height="192"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="3" height="3">
+  <data encoding="base64">
+   CgAAAAsAAAAMAAAAFgAAABcAAAAYAAAAIgAAACMAAAAkAAAA
+  </data>
+ </layer>
+</map>

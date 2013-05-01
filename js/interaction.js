@@ -74,9 +74,19 @@ game.InteractionScreen = me.ScreenObject.extend(
             0, 0,
             c.WIDTH, c.HEIGHT
         );
-
-		this.drawWords(context, this.teammate.username , 30, 10);
-		this.drawWords(context, game.username , 30, 310);
+        var player2 = game.getImage(this.teammate.interactionImage);
+        context.drawImage(
+            player2,
+           435,30
+        );   
+        var mainplayer = game.getImage(c.INTERIMAGE);
+        context.drawImage(
+            mainplayer,
+           45, 220
+        );  
+		this.drawWords(context, this.teammate.username , 45, 50);
+		this.drawWords(context, game.username , 435, 320);
+		this.drawWords(context, game.words , 200, 200);
          
         
     },

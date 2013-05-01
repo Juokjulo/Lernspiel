@@ -8,8 +8,6 @@ var PlayerEntity = me.ObjectEntity.extend({
  
     ------ */
  
- 
- 
     init: function(x, y, settings) {
         // call the constructor
         this.parent(x, y, settings);
@@ -117,6 +115,7 @@ var KayEntity = me.ObjectEntity.extend({
         this.setVelocity(1, 1);
 	this.isInteracting = false;
     this.username = "Kay";
+    this.interactionImage = "kay_player";
 	this.addAnimation ("down", [0]);
 	this.addAnimation ("left", [3,4,5]);
 	this.addAnimation ("right", [6,7,8]);
