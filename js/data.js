@@ -32,7 +32,7 @@ game.g_resources = {
 
     /* Maps from Tiled. */
     "map" : [
-        "klassenzimmerStart",
+        "KlassenzimmerStart",
         "Flur1",
         "Georaum"
     ],

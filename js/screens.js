@@ -5,7 +5,7 @@ game.PlayScreen = me.ScreenObject.extend(
    onResetEvent: function()
 	{	
       // stuff to reset on state change
-          me.levelDirector.loadLevel("klassenzimmerStart");
+          me.levelDirector.loadLevel("KlassenzimmerStart");
 	},
 	
 	
