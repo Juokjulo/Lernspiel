@@ -3,7 +3,11 @@ function word (correct, wrong){
 	this.wrong = wrong;
 
 	this.random = function (){
-		return this.correct;
+		var randomNum = Math.round(Math.random() * 2);
+		if (randomNum === 1){
+			return this.correct;
+		}
+		return this.wrong;
 	}
 };
 game.username = "Elli";
