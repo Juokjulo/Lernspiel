@@ -12,7 +12,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         // call the constructor
         this.parent(x, y, settings);
         // set the default horizontal & vertical speed (accel vector)
-        this.setVelocity(1, 1);
+        this.setVelocity(2, 2);
 	
 	// adjust the bounding box
 	this.updateColRect(2, 28, 22, 8);

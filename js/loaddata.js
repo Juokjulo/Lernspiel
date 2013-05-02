@@ -1,5 +1,13 @@
+ function word (correct, wrong){
+	this.correct = correct;
+	this.wrong = wrong;
 
+};
 game.username = "Karl";
-game.words = "kenne";
+var word1 = new word("kenne", "kene");
+var word2 = new word("lesen", "lessen");
+game.words = [word1,word2];
 game.score = 0;
 game.playtime = 0;
+
+
