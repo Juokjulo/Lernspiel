@@ -19,7 +19,10 @@ game.InteractionScreen = me.ScreenObject.extend(
 		this.teammate = teammate;
         this.parent(true);
         this.focus = "";
-        this.word = game.words[0].correct;
+        this.wordCounter = 0;
+        this.word = game.words[this.wordCounter].correct;
+        this.wordLeft = game.words[this.wordCounter].correct;
+        this.wordRight = game.words[this.wordCounter].wrong;
         this.font = new me.Font("Monaco, Courier New", 16, "#000");
         this.fontWordLeft = new me.Font("Monaco, Courier New", 16, "#000");
         this.fontWordRight = new me.Font("Monaco, Courier New", 16, "#000");
@@ -64,10 +67,16 @@ game.InteractionScreen = me.ScreenObject.extend(
         		me.state.change(me.state.PLAY);
         	}
         	if (this.focus === "left"){
-        		this.word = "richtig";
+        		this.wordCounter++;
+        		this.word = "richtig naechstes Wort:" + game.words[this.wordCounter].random();
+        		this.wordLeft = game.words[this.wordCounter].correct;
+        		this.wordRight = game.words[this.wordCounter].wrong;
         	}
         	if (this.focus === "right"){
-        		this.word = "falsch";
+        		this.wordCounter++;
+        		this.word = "falsch naechstes Wort:" + game.words[this.wordCounter].random();
+        		this.wordLeft = game.words[this.wordCounter].correct;
+        		this.wordRight = game.words[this.wordCounter].wrong;
         	}
             
         }
@@ -117,8 +126,8 @@ game.InteractionScreen = me.ScreenObject.extend(
 		this.drawWords(context, game.username , 435, 320,this.font);
 		this.drawWords(context, this.word, 200, 200, this.font);
 		this.drawWords(context,"Welche Schreibweise ist richtig?", 50, 340,this.font); 
-        this.drawWords(context, game.words[0].correct , 100, 400, this.fontWordLeft);
-        this.drawWords(context, game.words[0].wrong , 250, 400, this.fontWordRight);
+        this.drawWords(context, this.wordLeft, 100, 400, this.fontWordLeft);
+        this.drawWords(context, this.wordRight , 250, 400, this.fontWordRight);
         this.drawWords(context,"abbrechen", 200, 430,this.fontAbbrechen); 
 
         
