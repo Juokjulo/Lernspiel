@@ -116,6 +116,7 @@ game.InteractionScreen = me.ScreenObject.extend(
 		this.drawWords(context, this.teammate.username , 45, 50, this.font);
 		this.drawWords(context, game.username , 435, 320,this.font);
 		this.drawWords(context, this.word, 200, 200, this.font);
+		this.drawWords(context,"Welche Schreibweise ist richtig?", 50, 340,this.font); 
         this.drawWords(context, game.words[0].correct , 100, 400, this.fontWordLeft);
         this.drawWords(context, game.words[0].wrong , 250, 400, this.fontWordRight);
         this.drawWords(context,"abbrechen", 200, 430,this.fontAbbrechen); 
