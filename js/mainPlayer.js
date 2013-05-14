@@ -90,9 +90,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         // if we collide with an enemy
         if (res.obj.type == me.game.ACTION_OBJECT &&  me.input.isKeyPressed('action') && !res.obj.isInteracting) {
             
-              res.obj.interact(this);
-	      res.obj.isInteracting = false;
-      
+            res.obj.interact(this);      
         }
     }
 
@@ -113,41 +111,28 @@ var KayEntity = me.ObjectEntity.extend({
         this.parent(x, y, settings);
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(1, 1);
-	this.isInteracting = false;
-    this.username = "Kay";
-    this.interactionImage = "kay_player";
-	this.addAnimation ("down", [0]);
-	this.addAnimation ("left", [3,4,5]);
-	this.addAnimation ("right", [6,7,8]);
-	this.addAnimation ("up", [9,10,11]);
-	
-	this.setCurrentAnimation("down");
-	
-	// make it collidable
+    	this.isInteracting = false;
+        this.username = "Kay";
+        this.interactionImage = "kay_player";
+    	this.addAnimation ("down", [0]);
+    	this.addAnimation ("left", [3,4,5]);
+    	this.addAnimation ("right", [6,7,8]);
+    	this.addAnimation ("up", [9,10,11]);
+    	
+    	this.setCurrentAnimation("down");
+    	
+    	// make it collidable
         this.collidable = true;
-	this.type = me.game.ACTION_OBJECT;
-	
- 
+    	this.type = me.game.ACTION_OBJECT;
     },
-    "interact" : function interact(actor) {
+    interact: function(actor) {
     	this.isInteracting = true;
-        if (this.interactionCounter == 0){
-            game.dialog(["Ping uh i u u ju u ju u u ju uv u u u z  uz z z z z  uz u u u  u u u u i u ", "fdsc"]);
-            console.debug("Vor Ping");
-            console.debug(this.interactionCounter);
-            this.interactionCounter = 1;
-            console.debug("Nach Ping");
-            console.debug(this.interactionCounter);
+        game.dialog(["Ping uh i u u ju u ju u u ju uv u u u z  uz z z z z  uz u u u  u u u u i u ", "fdsc"]);
+            
+        if(me.input.isKeyPressed('action') ) {
+            game.fight(this);
         }
-        else {
-            game.dialog(["Pong"]);
-            console.debug("Vor Pong");
-            console.debug(this.interactionCounter);
-    	    this.interactionCounter = 0; 
-            console.debug("Nach Pong");
-            console.debug(this.interactionCounter);
-        }
-	   game.fight(this);
+	   
     },
     
       onCollision: function(res, obj) {

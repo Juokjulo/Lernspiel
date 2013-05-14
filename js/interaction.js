@@ -66,6 +66,8 @@ game.InteractionScreen = me.ScreenObject.extend(
         if (me.input.isKeyPressed("action") ) {
         	if (this.focus === "abbrechen"){
         		me.state.change(me.state.PLAY);
+                this.teammate.isInteracting(false);
+
         	}
         	if (this.focus === "left"){
         		this.wordCounter++;
