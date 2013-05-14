@@ -44,12 +44,9 @@
   </data>
  </layer>
  <objectgroup name="Objektebene 1" width="47" height="8">
-  <object name="mainPlayer" x="128" y="96" width="32" height="32">
+  <object name="fromKlassenzimmerStart" x="128" y="96" width="32" height="32">
    <properties>
-    <property name="from" value="KlassenzimmerStart"/>
-    <property name="image" value="chars_blue"/>
-    <property name="spriteheight" value="32"/>
-    <property name="spritewidth" value="32"/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object name="me.LevelEntity" x="128" y="32" width="32" height="64">
