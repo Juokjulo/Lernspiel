@@ -28,6 +28,7 @@ var game	=
 		// set all resources to be loaded
 		//me.loader.preload(g_resources);
 		this.loadResources();
+		game.loadFromDatabase();
  
  		// load everything & display a loading screen
 		me.state.change(me.state.LOADING);

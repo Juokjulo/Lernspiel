@@ -42,3 +42,26 @@ game.g_resources = {
     ],
 
 };
+
+game.database_resources = {
+    words: [ 
+        ["kenne", "kene"],
+        ["lesen", "lessen"],
+        ["Schloss", "Schlos"],
+        ["Schiff", "Schif"],
+        ["Tipp", "Tip"],
+        ["Ebbe", "Ebe"],
+        ["einschlafen", "einschlaffen"],
+        ["scharf", "scharff"],
+        ["Keks", "Keeks"],
+        ["Mond", "Moond"],
+    ],
+    user: {
+        username: "Elli",
+        userscore: 30,
+        userLevel: 1,
+        playduration: 200
+    }
+
+   
+}
