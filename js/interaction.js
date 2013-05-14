@@ -36,11 +36,12 @@ game.InteractionScreen = me.ScreenObject.extend(
         var y = 0;
 
 
-
+        
         this.buffer.fillStyle = "#222";
         this.buffer.fillRect(0, 0, c.WIDTH, h);
         line = "test";
 		this.font.draw(this.buffer, line, x, y);
+
 	},
    onResetEvent: function()
 	{	
@@ -120,8 +121,17 @@ game.InteractionScreen = me.ScreenObject.extend(
             mainplayer,
            45, 220
         );  
-        
-		this.drawWords(context, this.teammate.username , 45, 50, this.font);
+
+        context.save;
+        context.beginPath();
+        context.moveTo(47, 82);
+        context.lineTo(221, 82);
+        context.lineWidth = 8;
+        context.strokeStyle = '#01DFA5';
+        context.stroke();
+        context.restore;
+		
+        this.drawWords(context, this.teammate.username , 45, 50, this.font);
 		this.drawWords(context, game.username , 435, 320,this.font);
 		this.drawWords(context, this.word, 200, 200, this.font);
 		this.drawWords(context,"Welche Schreibweise ist richtig?", 50, 340,this.font); 
