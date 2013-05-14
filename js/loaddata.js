@@ -8,6 +8,11 @@ function word (correct, wrong){
 			return this.correct;
 		}
 		return this.wrong;
+	},
+
+	this.other = function(word){
+		if (word == this.correct) return this.wrong;
+		return this.correct;
 	}
 };
 game.username = "Elli";
