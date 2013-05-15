@@ -48,6 +48,7 @@ var game	=
 		// add our player entity in the entity pool
 		me.entityPool.add("mainPlayer", PlayerEntity);
 		me.entityPool.add("kay", KayEntity);
+		me.entityPool.add("putz", PutzEntity);
 		me.entityPool.add("me.LevelEntity", me.LevelEntity);
 			  
 		// enable the keyboard

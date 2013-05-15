@@ -36,7 +36,7 @@ game.InteractionScreen = me.ScreenObject.extend(
 
         this.heading = "Welche Schreibweise ist richtig?";
         this.levelTeammate = teammate.playerLevel;
-        this.energypointsTeammate = teammate.energypoints;
+        this.energypointsTeammate = teammate.getEnergypoints();
         this.myLevel = game.level;
         this.myEnergypoints = game.energypoints;
         this.myknowledgePoints = game.knowledgePoints;
@@ -171,7 +171,7 @@ game.InteractionScreen = me.ScreenObject.extend(
         	
         this.drawWords(this.teammate.username , 45, 50, this.font);
         this.drawWords("lv:" + this.levelTeammate,170, 50, this.font);
-        this.drawWords(this.energypointsTeammate + "/" + this.teammate.energypoints,100, 80, this.font);
+        this.drawWords(this.energypointsTeammate + "/" + this.teammate.getEnergypoints(),100, 80, this.font);
 		this.drawWords(game.username , 435, 320,this.font);
         this.drawWords("lv:" + this.myLevel , 560, 320,this.font);
         this.drawWords(this.myEnergypoints + "/" + game.energypoints, 490, 348,this.font);
@@ -220,7 +220,7 @@ game.InteractionScreen = me.ScreenObject.extend(
    "newWidthTeammate" : function newWidthTeammate(energylost){
         if (energylost < this.energypointsTeammate){
             this.energypointsTeammate = this.energypointsTeammate - energylost;
-            var newWidth = (this.energypointsTeammate/this.teammate.energypoints)* (this.energyTeammateArray[4] - this.energyTeammateArray[0]);
+            var newWidth = (this.energypointsTeammate/this.teammate.getEnergypoints())* (this.energyTeammateArray[4] - this.energyTeammateArray[0]);
             this.energyTeammateArray[2] = this.energyTeammateArray[0] + newWidth;
         } else{
              this.energypointsTeammate = 0;

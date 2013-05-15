@@ -60,5 +60,12 @@
     <property name="spritewidth" value="32"/>
    </properties>
   </object>
+  <object name="putz" x="32" y="192" width="32" height="32">
+   <properties>
+    <property name="image" value="chars_putz"/>
+    <property name="spriteheight" value="32"/>
+    <property name="spritewidth" value="32"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
