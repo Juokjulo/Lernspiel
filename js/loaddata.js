@@ -1,6 +1,7 @@
-function word (correct, wrong){
+function word (correct, wrong, exampleSentence){
 	this.correct = correct;
 	this.wrong = wrong;
+	this.exampleSentence = exampleSentence;
 
 	this.random = function (){
 		var randomNum = Math.round(Math.random());
@@ -26,7 +27,7 @@ game.knowledgePoints = 0;
 
 game.loadFromDatabase = function loadFromDatabase(){
 	this.database_resources["words"].forEach(function forEach(value) {
-           var newWord = new word(value[0], value[1]);
+           var newWord = new word(value[0], value[1], value[2]);
            game.words.push(newWord);
     });
     game.username = this.database_resources.user.username;

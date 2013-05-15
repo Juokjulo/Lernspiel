@@ -22,11 +22,13 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.focusColor = "#f00";
         this.normalTextColor = "#000";
 
-        this.wordCounter = 0;
-        this.word = game.words[this.wordCounter].random();
+        this.usedWords = [];
+        this.wordNumber = this.getRandomWord();
+        this.word = "";
+        this.sentence = game.words[this.wordNumber].exampleSentence;
         this.usermessage = "";
-        this.wordLeft = game.words[this.wordCounter].random();
-        this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
+        this.wordLeft = game.words[this.wordNumber].random();
+        this.wordRight = game.words[this.wordNumber].other(this.wordLeft);
 
         this.font = new me.Font("Monaco, Courier New", 16, this.normalTextColor);
         this.changeFocusColor(this.focusColor, this.normalTextColor, this.normalTextColor);
@@ -74,44 +76,46 @@ game.InteractionScreen = me.ScreenObject.extend(
         	}
         	if (this.focus === "left"){
                 var energylost = this.energylost();
-                if (this.wordLeft === game.words[this.wordCounter].correct){
-                    this.wordCounter++;
-                    this.word = "richtig naechstes Wort: " + game.words[this.wordCounter].random();
+                if (this.wordLeft === game.words[this.wordNumber].correct){
+                    this.word = "Stimmt, '"+ game.words[this.wordNumber].correct +"' ist richtig.";
+                    this.wordNumber = this.getRandomWord();
                     this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
                     this.newWidthTeammate(energylost);
                     this.drawLine(this.energyTeammateArray[4],this.energyTeammateArray[3],
                         this.energyTeammateArray[2], this.energyTeammateArray[3], '#000000');
-                }else {
-                    this.wordCounter++;
-                    this.word = "falsch naechstes Wort: " + game.words[this.wordCounter].random();
+                }else { 
+                    this.word = "Falsch, das richtige Wort ist: '"+ game.words[this.wordNumber].correct + "'";
+                    this.wordNumber = this.getRandomWord();
                     this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
                     this.newWidthMainplayer(energylost);
                     this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
                         this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
                 }
                 
-        		this.wordLeft = game.words[this.wordCounter].random();
-        		this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
+        		this.wordLeft = game.words[this.wordNumber].random();
+        		this.wordRight = game.words[this.wordNumber].other(this.wordLeft);
+                this.sentence = game.words[this.wordNumber].exampleSentence;
         	}
         	if (this.focus === "right"){
                 var energylost = this.energylost();
-                if (this.wordRight === game.words[this.wordCounter].correct){
-                    this.wordCounter++;
-                    this.word = "richtig naechstes Wort: " + game.words[this.wordCounter].random();
+                if (this.wordRight === game.words[this.wordNumber].correct){
+                    this.word = "Stimmt, '"+ game.words[this.wordNumber].correct +"' ist richtig.";
+                    this.wordNumber = this.getRandomWord();
                     this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
                     this.newWidthTeammate(energylost);
                     this.drawLine(this.energyTeammateArray[4],this.energyTeammateArray[3],
                         this.energyTeammateArray[2], this.energyTeammateArray[3], '#000000');
                 }else {
-                    this.wordCounter++;
-                    this.word = "falsch naechstes Wort: " + game.words[this.wordCounter].random();
+                    this.word = "Falsch, das richtige Wort ist: '"+ game.words[this.wordNumber].correct + "'";
+                    this.wordNumber = this.getRandomWord();
                     this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
                     this.newWidthMainplayer(energylost);
                     this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
                         this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
                 }
-        		this.wordLeft = game.words[this.wordCounter].random();
-        		this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
+        		this.wordLeft = game.words[this.wordNumber].random();
+        		this.wordRight = game.words[this.wordNumber].other(this.wordLeft);
+                this.sentence = game.words[this.wordNumber].exampleSentence;
         	}
             
 
@@ -172,8 +176,9 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.drawWords("lv:" + this.myLevel , 560, 320,this.font);
         this.drawWords(this.myEnergypoints + "/" + game.energypoints, 490, 348,this.font);
         this.drawWords(this.myknowledgePoints, 490, 378,this.font);
-		this.drawWords(this.word, 150, 150, this.font);
-        this.drawWords(this.usermessage, 150, 180, this.font);
+		this.drawWords(this.word, 100, 150, this.font);
+        this.drawWords(this.usermessage, 100, 180, this.font);
+        this.drawWords(this.sentence, 100, 210, this.font);
 		this.drawWords(this.heading, 50, 340,this.font); 
         this.drawWords(this.wordLeft, 100, 380, this.fontWordLeft);
         this.drawWords(this.wordRight , 250, 380, this.fontWordRight);
@@ -233,6 +238,19 @@ game.InteractionScreen = me.ScreenObject.extend(
              this.myEnergyArray[2] = this.myEnergyArray[0];
         } 
         
+   },
+   "getRandomWord" : function getRandomWord(){
+        if(game.words.length === this.usedWords.length){
+            this.usedWords = [];
+        }
+        var number = Math.round(Math.random() * (game.words.length-1));
+        for (var i in this.usedWords){
+            if (number == this.usedWords[i]) {return this.getRandomWord()};
+
+        }
+        this.usedWords.push(number);
+        console.log(this.usedWords); 
+        return number;
    }
 
 });
