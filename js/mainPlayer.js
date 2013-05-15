@@ -88,8 +88,9 @@ var PlayerEntity = me.ObjectEntity.extend({
 	  
 	  if (res) {
         // if we collide with an enemy
-        if (res.obj.type == me.game.ACTION_OBJECT &&  me.input.isKeyPressed('action') && !res.obj.isInteracting) {
-            
+        //if (res.obj.type == me.game.ACTION_OBJECT &&  me.input.isKeyPressed('action') && !res.obj.isInteracting) {
+        if (me.input.isKeyPressed('action') ) {
+             
             res.obj.interact(this);      
         }
     }
@@ -112,6 +113,8 @@ var KayEntity = me.ObjectEntity.extend({
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(1, 1);
     	this.isInteracting = false;
+        // adjust the bounding box
+        this.updateColRect(-4, 40, 0, 40);
         this.username = "Kay";
         this.interactionImage = "kay_player";
     	this.addAnimation ("down", [0]);
@@ -124,6 +127,7 @@ var KayEntity = me.ObjectEntity.extend({
     	// make it collidable
         this.collidable = true;
     	this.type = me.game.ACTION_OBJECT;
+
     },
     interact: function(actor) {
     	this.isInteracting = true;
