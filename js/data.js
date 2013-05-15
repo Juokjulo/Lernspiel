@@ -60,7 +60,9 @@ game.database_resources = {
         username: "Elli",
         userscore: 30,
         userLevel: 1,
-        playduration: 200
+        playduration: 200,
+        userEnergyPoints: 10,
+        userKnowledgePoints: 0,
     }
 
    

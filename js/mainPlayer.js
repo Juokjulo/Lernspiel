@@ -116,6 +116,8 @@ var KayEntity = me.ObjectEntity.extend({
         // adjust the bounding box
         this.updateColRect(-4, 40, 0, 40);
         this.username = "Kay";
+        this.playerLevel = 1;
+        this.energypoints = 10;
         this.interactionImage = "kay_player";
     	this.addAnimation ("down", [0]);
     	this.addAnimation ("left", [3,4,5]);
@@ -133,9 +135,8 @@ var KayEntity = me.ObjectEntity.extend({
     	this.isInteracting = true;
         game.dialog(["Ping uh i u u ju u ju u u ju uv u u u z  uz z z z z  uz u u u  u u u u i u ", "fdsc"]);
             
-        if(me.input.isKeyPressed('action') ) {
-            game.fight(this);
-        }
+        game.fight(this);
+        
 	   
     },
     

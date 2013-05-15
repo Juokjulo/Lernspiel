@@ -18,15 +18,25 @@ game.InteractionScreen = me.ScreenObject.extend(
 	{
 		this.teammate = teammate;
         this.parent(true);
-        this.focus = "left";
+        
         this.focusColor = "#f00";
         this.normalTextColor = "#000";
+
         this.wordCounter = 0;
-        this.word = game.words[this.wordCounter].correct;
-        this.wordLeft = game.words[this.wordCounter].correct;
-        this.wordRight = game.words[this.wordCounter].wrong;
+        this.word = game.words[this.wordCounter].random();
+        this.wordLeft = game.words[this.wordCounter].random();
+        this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
+
         this.font = new me.Font("Monaco, Courier New", 16, this.normalTextColor);
         this.changeFocusColor(this.focusColor, this.normalTextColor, this.normalTextColor);
+        this.focus = "left";
+
+        this.heading = "Welche Schreibweise ist richtig?";
+        this.levelTeammate = teammate.playerLevel;
+        this.energypointsTeammate = teammate.energypoints ;
+        this.myLevel = game.level;
+        this.myEnergypoints = game.energypoints;
+        this.myknowledgePoints = game.knowledgePoints;
         // Render text to buffer canvas.
         this.canvas = document.createElement("canvas");
         this.buffer = this.canvas.getContext("2d");
@@ -83,6 +93,8 @@ game.InteractionScreen = me.ScreenObject.extend(
         		this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
         	}
             
+
+
         } else if (me.input.isKeyPressed("left") ) {
             this.changeFocusColor(this.focusColor, this.normalTextColor, this.normalTextColor);
             this.focus = "left";
@@ -124,22 +136,23 @@ game.InteractionScreen = me.ScreenObject.extend(
            45, 220
         );  
 
-        context.save;
-        context.beginPath();
-        context.moveTo(47, 82);
-        context.lineTo(221, 82);
-        context.lineWidth = 8;
-        context.strokeStyle = '#01DFA5';
-        context.stroke();
-        context.restore;
-		
-        this.drawWords(context, this.teammate.username , 45, 50, this.font);
-		this.drawWords(context, game.username , 435, 320,this.font);
-		this.drawWords(context, this.word, 200, 200, this.font);
-		this.drawWords(context,"Welche Schreibweise ist richtig?", 50, 340,this.font); 
-        this.drawWords(context, this.wordLeft, 100, 380, this.fontWordLeft);
-        this.drawWords(context, this.wordRight , 250, 380, this.fontWordRight);
-        this.drawWords(context,"Abbrechen", 270, 430,this.fontAbbrechen); 
+        this.drawLine(47,85,221,85, '#01DFA5');
+        this.drawLine(435,352,603,352, '#01DFA5');
+        this.drawLine(435,382,603,382, '#0080FF');
+    
+        	
+        this.drawWords(this.teammate.username , 45, 50, this.font);
+        this.drawWords("lv:" + this.levelTeammate,170, 50, this.font);
+        this.drawWords(this.energypointsTeammate + "/" + this.teammate.energypoints,100, 80, this.font);
+		this.drawWords(game.username , 435, 320,this.font);
+        this.drawWords("lv:" + this.myLevel , 560, 320,this.font);
+        this.drawWords(this.myEnergypoints + "/" + game.energypoints, 490, 348,this.font);
+        this.drawWords(this.myknowledgePoints, 490, 378,this.font);
+		this.drawWords(this.word, 200, 200, this.font);
+		this.drawWords(this.heading, 50, 340,this.font); 
+        this.drawWords(this.wordLeft, 100, 380, this.fontWordLeft);
+        this.drawWords(this.wordRight , 250, 380, this.fontWordRight);
+        this.drawWords("Abbrechen", 270, 430,this.fontAbbrechen); 
 
         
     },
@@ -149,12 +162,24 @@ game.InteractionScreen = me.ScreenObject.extend(
             this.fontWordLeft = new me.Font("Monaco, Courier New", 16, colorLeft);
             this.fontAbbrechen = new me.Font("Monaco, Courier New", 16, colorAbbrechen);
     },
-    "drawWords" : function drawWords(context, message, width, height, font) {
+    "drawWords" : function drawWords(message, width, height, font) {
     	
-        var w = Math.min(this.font.measureText(context, message).width, c.WIDTH);    
-        context.save();
-		font.draw(context, message, width, height);    
-        context.restore();
+        var w = Math.min(this.font.measureText(this.context, message).width, c.WIDTH);    
+        this.context.save();
+		font.draw(this.context, message, width, height);    
+        this.context.restore();
+
+    },   
+
+    "drawLine" : function drawLine(fromX, fromY, toX, toY, color) {
+        this.context.save;
+        this.context.beginPath();
+        this.context.moveTo(fromX, fromY);
+        this.context.lineTo(toX, toY);
+        this.context.lineWidth = 6;
+        this.context.strokeStyle = color;
+        this.context.stroke();
+        this.context.restore;
 
     }
    
