@@ -24,6 +24,7 @@ game.InteractionScreen = me.ScreenObject.extend(
 
         this.wordCounter = 0;
         this.word = game.words[this.wordCounter].random();
+        this.usermessage = "";
         this.wordLeft = game.words[this.wordCounter].random();
         this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
 
@@ -33,24 +34,16 @@ game.InteractionScreen = me.ScreenObject.extend(
 
         this.heading = "Welche Schreibweise ist richtig?";
         this.levelTeammate = teammate.playerLevel;
-        this.energypointsTeammate = teammate.energypoints ;
+        this.energypointsTeammate = teammate.energypoints;
         this.myLevel = game.level;
         this.myEnergypoints = game.energypoints;
         this.myknowledgePoints = game.knowledgePoints;
+
+        this.energyTeammateArray = [47,85,221,85,221]; 
+        this.myEnergyArray = [435,352,603,352,603];
+        this.myKnowledgeArray = [435,382,603,382,603];
         // Render text to buffer canvas.
         this.canvas = document.createElement("canvas");
-        this.buffer = this.canvas.getContext("2d");
-
-    	var h = 1000;
-        var x = ~~((c.WIDTH ) / 2);
-        var y = 0;
-
-
-        
-        this.buffer.fillStyle = "#222";
-        this.buffer.fillRect(0, 0, c.WIDTH, h);
-        line = "test";
-		this.font.draw(this.buffer, line, x, y);
 
 	},
    onResetEvent: function()
@@ -58,6 +51,7 @@ game.InteractionScreen = me.ScreenObject.extend(
       // stuff to reset on state change
           me.game.viewport.fadeOut("black", 2000);
           this.y = 0;
+          this.teammate.isInteracting = false;
 	},
 	
 	
@@ -76,19 +70,46 @@ game.InteractionScreen = me.ScreenObject.extend(
         if (me.input.isKeyPressed("action") ) {
         	if (this.focus === "abbrechen"){
         		me.state.change(me.state.PLAY);
-                this.teammate.isInteracting(false);
 
         	}
         	if (this.focus === "left"){
-        		this.wordCounter++;
-        		this.word = "richtig naechstes Wort:" + game.words[this.wordCounter].random();
+                var energylost = this.energylost();
+                if (this.wordLeft === game.words[this.wordCounter].correct){
+                    this.wordCounter++;
+                    this.word = "richtig naechstes Wort: " + game.words[this.wordCounter].random();
+                    this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
+                    this.newWidthTeammate(energylost);
+                    this.drawLine(this.energyTeammateArray[4],this.energyTeammateArray[3],
+                        this.energyTeammateArray[2], this.energyTeammateArray[3], '#000000');
+                }else {
+                    this.wordCounter++;
+                    this.word = "falsch naechstes Wort: " + game.words[this.wordCounter].random();
+                    this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
+                    this.newWidthMainplayer(energylost);
+                    this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
+                        this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
+                }
+                
         		this.wordLeft = game.words[this.wordCounter].random();
         		this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
         	}
         	if (this.focus === "right"){
-        		this.wordCounter++;
-
-        		this.word = "falsch naechstes Wort:" + game.words[this.wordCounter].random();
+                var energylost = this.energylost();
+                if (this.wordRight === game.words[this.wordCounter].correct){
+                    this.wordCounter++;
+                    this.word = "richtig naechstes Wort: " + game.words[this.wordCounter].random();
+                    this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
+                    this.newWidthTeammate(energylost);
+                    this.drawLine(this.energyTeammateArray[4],this.energyTeammateArray[3],
+                        this.energyTeammateArray[2], this.energyTeammateArray[3], '#000000');
+                }else {
+                    this.wordCounter++;
+                    this.word = "falsch naechstes Wort: " + game.words[this.wordCounter].random();
+                    this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
+                    this.newWidthMainplayer(energylost);
+                    this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
+                        this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
+                }
         		this.wordLeft = game.words[this.wordCounter].random();
         		this.wordRight = game.words[this.wordCounter].other(this.wordLeft);
         	}
@@ -136,10 +157,13 @@ game.InteractionScreen = me.ScreenObject.extend(
            45, 220
         );  
 
-        this.drawLine(47,85,221,85, '#01DFA5');
-        this.drawLine(435,352,603,352, '#01DFA5');
-        this.drawLine(435,382,603,382, '#0080FF');
-    
+        this.drawLine(this.energyTeammateArray[0],this.energyTeammateArray[1], 
+            this.energyTeammateArray[2], this.energyTeammateArray[3], '#01DFA5');
+        this.drawLine(this.myEnergyArray[0],this.myEnergyArray[1], 
+            this.myEnergyArray[2], this.myEnergyArray[3], '#01DFA5');
+        this.drawLine(this.myKnowledgeArray[0],this.myKnowledgeArray[1], 
+            this.myKnowledgeArray[2], this.myKnowledgeArray[3],'#0080FF');
+        
         	
         this.drawWords(this.teammate.username , 45, 50, this.font);
         this.drawWords("lv:" + this.levelTeammate,170, 50, this.font);
@@ -148,7 +172,8 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.drawWords("lv:" + this.myLevel , 560, 320,this.font);
         this.drawWords(this.myEnergypoints + "/" + game.energypoints, 490, 348,this.font);
         this.drawWords(this.myknowledgePoints, 490, 378,this.font);
-		this.drawWords(this.word, 200, 200, this.font);
+		this.drawWords(this.word, 150, 150, this.font);
+        this.drawWords(this.usermessage, 150, 180, this.font);
 		this.drawWords(this.heading, 50, 340,this.font); 
         this.drawWords(this.wordLeft, 100, 380, this.fontWordLeft);
         this.drawWords(this.wordRight , 250, 380, this.fontWordRight);
@@ -181,7 +206,33 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.context.stroke();
         this.context.restore;
 
-    }
+    },
+
+    "energylost" : function energylost(){
+        return Math.abs((game.level * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)));
+    },
    
+   "newWidthTeammate" : function newWidthTeammate(energylost){
+        if (energylost < this.energypointsTeammate){
+            this.energypointsTeammate = this.energypointsTeammate - energylost;
+            var newWidth = (this.energypointsTeammate/this.teammate.energypoints)* (this.energyTeammateArray[4] - this.energyTeammateArray[0]);
+            this.energyTeammateArray[2] = this.energyTeammateArray[0] + newWidth;
+        } else{
+             this.energypointsTeammate = 0;
+             this.energyTeammateArray[2] = this.energyTeammateArray[0];
+        } 
+        
+   },
+    "newWidthMainplayer" : function newWidthMainplayer(energylost){
+        if (energylost < this.myEnergypoints){
+            this.myEnergypoints = this.myEnergypoints - energylost;
+            var newWidth = (this.myEnergypoints/game.energypoints)* (this.myEnergyArray[4] - this.myEnergyArray[0]);
+            this.myEnergyArray[2] = this.myEnergyArray[0] + newWidth;
+        } else{
+             this.myEnergypoints = 0;
+             this.myEnergyArray[2] = this.myEnergyArray[0];
+        } 
+        
+   }
 
 });

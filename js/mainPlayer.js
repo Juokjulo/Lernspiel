@@ -117,7 +117,7 @@ var KayEntity = me.ObjectEntity.extend({
         this.updateColRect(-4, 40, 0, 40);
         this.username = "Kay";
         this.playerLevel = 1;
-        this.energypoints = 10;
+        this.energypoints = this.playerLevel * 10;
         this.interactionImage = "kay_player";
     	this.addAnimation ("down", [0]);
     	this.addAnimation ("left", [3,4,5]);
