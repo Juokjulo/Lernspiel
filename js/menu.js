@@ -12,7 +12,7 @@ game.MenuScreen = me.ScreenObject.extend(
         this.normalTextColor = "#000";
 
         //Menuliste fuellen
-        this.menuItemArray.push([new menuItem("Test",0), new menuItem("Schultasche",1), 
+        this.menuItemArray.push([new menuItem("Profil",0), new menuItem("Schultasche",1), 
         	new menuItem("Spiel speichern",2), 
         	new menuItem("Highscore",3), new menuItem("Einstellungen",4), new menuItem("Menu verlassen",5), ]);
 
