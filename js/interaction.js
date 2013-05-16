@@ -74,9 +74,11 @@ game.InteractionScreen = me.ScreenObject.extend(
         		me.state.change(me.state.PLAY);
 
         	}
-        	if (this.focus === "left"){
+        	if (this.focus === "left" || this.focus === "right" ){
                 var energylost = this.energylost();
-                if (this.wordLeft === game.words[this.wordNumber].correct){
+                if ((this.wordLeft === game.words[this.wordNumber].correct && this.focus === "left" ) ||
+                    (this.wordRight === game.words[this.wordNumber].correct && this.focus === "right" ) ){
+
                     this.word = "Stimmt, '"+ game.words[this.wordNumber].correct +"' ist richtig.";
                     this.wordNumber = this.getRandomWord();
                     this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
@@ -92,27 +94,6 @@ game.InteractionScreen = me.ScreenObject.extend(
                         this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
                 }
                 
-        		this.wordLeft = game.words[this.wordNumber].random();
-        		this.wordRight = game.words[this.wordNumber].other(this.wordLeft);
-                this.sentence = game.words[this.wordNumber].exampleSentence;
-        	}
-        	if (this.focus === "right"){
-                var energylost = this.energylost();
-                if (this.wordRight === game.words[this.wordNumber].correct){
-                    this.word = "Stimmt, '"+ game.words[this.wordNumber].correct +"' ist richtig.";
-                    this.wordNumber = this.getRandomWord();
-                    this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
-                    this.newWidthTeammate(energylost);
-                    this.drawLine(this.energyTeammateArray[4],this.energyTeammateArray[3],
-                        this.energyTeammateArray[2], this.energyTeammateArray[3], '#000000');
-                }else {
-                    this.word = "Falsch, das richtige Wort ist: '"+ game.words[this.wordNumber].correct + "'";
-                    this.wordNumber = this.getRandomWord();
-                    this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
-                    this.newWidthMainplayer(energylost);
-                    this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
-                        this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
-                }
         		this.wordLeft = game.words[this.wordNumber].random();
         		this.wordRight = game.words[this.wordNumber].other(this.wordLeft);
                 this.sentence = game.words[this.wordNumber].exampleSentence;
@@ -215,6 +196,10 @@ game.InteractionScreen = me.ScreenObject.extend(
 
     "energylost" : function energylost(){
         return Math.abs((game.level * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)));
+    },
+
+     "getMoreKnowledge" : function getMoreKnowledge(){
+        return (Math.abs((this.teammate.playerLevel * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)))) + 1;
     },
    
    "newWidthTeammate" : function newWidthTeammate(energylost){
