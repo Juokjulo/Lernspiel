@@ -82,7 +82,11 @@ var PlayerEntity = NPCEntity.extend({
             this.parent();
             return true;
         }
-         
+        
+    if (me.input.isKeyPressed('menu') ) {     
+        me.state.set(me.state.Menu, new game.MenuScreen(this));
+        me.state.change(me.state.Menu);      
+    }
 	// check for collision
         var res = me.game.collide(this);
 	  
