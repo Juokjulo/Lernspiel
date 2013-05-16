@@ -16,7 +16,7 @@ var PlayerEntity = NPCEntity.extend({
 	
 	// adjust the bounding box
 	this.updateColRect(2, 28, 22, 8);
-    
+    this.interactionImage = "blue_player",
 	this.addAnimation ("down", [0,1,2]);
 	this.addAnimation ("left", [3,4,5]);
 	this.addAnimation ("right", [6,7,8]);

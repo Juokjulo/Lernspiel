@@ -71,7 +71,7 @@ var game	=
             g_resources.push({
                 "name"  : value,
                 "type"  : "image",
-                "src"   : "data/charas/" + value + ".png"
+                "src"   : "elli_js/data/charas/" + value + ".png"
             })
         });
 	
@@ -79,7 +79,7 @@ var game	=
             g_resources.push({
                 "name"  : value,
                 "type"  : "image",
-                "src"   : "data/img/" + value + ".png"
+                "src"   : "elli_js/data/img/" + value + ".png"
             })
         });
 	
@@ -87,7 +87,7 @@ var game	=
             g_resources.push({
                 "name"  : value,
                 "type"  : "image",
-                "src"   : "data/tileset/" + value + ".png"
+                "src"   : "elli_js/data/tileset/" + value + ".png"
             })
         });
 
@@ -97,7 +97,7 @@ var game	=
             g_resources.push({
                 "name"  : value,
                 "type"  : "tmx",
-                "src"   : "data/map/" + value + ".tmx"
+                "src"   : "elli_js/data/map/" + value + ".tmx"
             })
         });
 

@@ -157,9 +157,9 @@ game.InteractionScreen = me.ScreenObject.extend(
             player2,
            435,30
         );   
-        var mainplayer = game.getImage(c.INTERIMAGE);
+        var mainplayerimage = game.getImage(this.mainplayer.interactionImage);
         context.drawImage(
-            mainplayer,
+            mainplayerimage,
            45, 220
         );  
 
@@ -218,9 +218,9 @@ game.InteractionScreen = me.ScreenObject.extend(
     },
 
     "energylost" : function energylost(){
-        return Math.abs((game.level * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)));
+        return (Math.abs((game.level * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)))) + 1;
     },
-
+ 
      "getMoreKnowledge" : function getMoreKnowledge(){
         return (Math.abs((this.teammate.playerLevel * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)))) + 1;
     },

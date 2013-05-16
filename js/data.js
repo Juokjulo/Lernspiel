@@ -19,7 +19,8 @@ game.g_resources = {
         "dialog",
         "hintergrund",
         "menu",
-        "fight"
+        "fight",
+        "profil"
 
 
     ],
@@ -56,7 +57,7 @@ game.g_resources = {
     ],
 
 };
-
+/*
 game.database_resources = {
     words: [ 
         ["kenne", "kene", "Ich [kenne/kene] die Antwort."],
@@ -77,7 +78,6 @@ game.database_resources = {
         ["Pizza", "Piza","Ich esse gern [Pizza/Piza]."],
         ["schwimmen", "schwimen", "Max und Tim [schimmen/schwimen] gern im See."],
         ["See", "Se", "Max und Tim baden gern im [See/Se]."],
-
     ],
     user: {
         username: "Elli",
@@ -87,6 +87,6 @@ game.database_resources = {
         userEnergyPoints: 10,
         userKnowledgePoints: 0,
     }
-
    
 }
+*/

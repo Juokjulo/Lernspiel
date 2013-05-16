@@ -53,7 +53,7 @@ game.MenuScreen = me.ScreenObject.extend(
         	switch(this.focus)
 			{
 				case 0:
-				  
+				  //this.profil();
 				  break;
 				case 1:
 				 this.bag();
@@ -93,6 +93,8 @@ game.MenuScreen = me.ScreenObject.extend(
             0, 0,
             c.WIDTH, c.HEIGHT
         );
+
+
  		
  		for (var i in this.menuItemArray.array) {
  			this.drawWords(this.menuItemArray.getName(i), 70, (i * 50) + 100, this.menuItemArray.getFont(i));
@@ -138,6 +140,21 @@ game.MenuScreen = me.ScreenObject.extend(
     },
      "bag" : function bag(){
 
+    },
+
+    "profil" : function profil(){
+    	this.context.save;
+    	var background = game.getImage("profil");
+        this.context.drawImage(
+            background,
+            45, 220
+        );
+        var playerFace = game.getImage(this.mainplayer.interactionImage);
+        this.context.drawImage(
+            playerFace,
+            45, 220
+        );
+        this.context.restore;
     },
 
 
