@@ -11,14 +11,18 @@ game.MenuScreen = me.ScreenObject.extend(
         this.focusColor = "#f00";
         this.normalTextColor = "#000";
 
-   
-        this.font = new me.Font("Monaco, Courier New", 16, this.normalTextColor);
-        this.focus = "";
-
         //Menuliste fuellen
         this.menuItemArray.push([new menuItem("Test",0), new menuItem("Schultasche",1), 
         	new menuItem("Spiel speichern",2), 
         	new menuItem("Highscore",3), new menuItem("Einstellungen",4), new menuItem("Menu verlassen",5), ]);
+
+        this.focus = 0;
+        this.changeFocus(0);
+
+        me.input.bindKey(me.input.KEY.LEFT,  "left", true);
+		me.input.bindKey(me.input.KEY.RIGHT, "right", true);
+		me.input.bindKey(me.input.KEY.UP,  "up", true);
+		me.input.bindKey(me.input.KEY.DOWN, "down", true);
 
         // Render text to buffer canvas.
         this.canvas = document.createElement("canvas");
@@ -46,16 +50,35 @@ game.MenuScreen = me.ScreenObject.extend(
    
     "update" : function update() {
         if (me.input.isKeyPressed("action") ) {
+        	switch(this.focus)
+			{
+				case 0:
+				  
+				  break;
+				case 1:
+				 this.bag();
+				  break;
+				case 2:
+				  
+				  break;
+				case 3:
+				  
+				  break;
+				case 4:
+				  this.myoptions();
+				  break;
+				case 5:
+				  this.ende();
+				  break;
+				
+			}
 
-
-        } else if (me.input.isKeyPressed("left") ) {
-        
-        } else if (me.input.isKeyPressed("right") ) {
-         
-        } else if (me.input.isKeyPressed("down") ) {
-          
-        } else if(me.input.isKeyPressed("up") ){
-          
+        } else if (me.input.isKeyPressed("left") || me.input.isKeyPressed("up") ) {
+        	this.focus--;
+        	this.changeFocus(this.focus);
+        } else if (me.input.isKeyPressed("right") || me.input.isKeyPressed("down") ) {
+     		this.focus++;
+     		this.changeFocus(this.focus);
         }
         return this.parent() || (this.fader !== -1);
     },
@@ -72,26 +95,50 @@ game.MenuScreen = me.ScreenObject.extend(
         );
  		
  		for (var i in this.menuItemArray.array) {
- 			this.drawWords(this.menuItemArray.array[i].name, 50, (i * 50), this.font);
+ 			this.drawWords(this.menuItemArray.getName(i), 70, (i * 50) + 100, this.menuItemArray.getFont(i));
  		};
  		
     },
    
-    "changeFocusColor" : function changeFocusColor(number,color){
-    	for (var i = Things.length - 1; i >= 0; i--) {
-    		Things[i]
+    "changeFocus" : function changeFocus(number){
+    	if (number < 0){
+    		this.focus = 0;
+    		number = 0;
+    	} 
+    	if (number > this.menuItemArray.array.length - 1 ) {
+    		this.focus = this.menuItemArray.array.length - 1 ;
+    		number = this.focus;
     	};
-            this.fontWordRight = new me.Font("Monaco, Courier New", 16, colorRight);
+
+    	for (var i in this.menuItemArray.array) {
+    		 this.menuItemArray.array[i].font = new me.Font("Monaco, Courier New", 16, this.normalTextColor);
+    	};
+    	font = new me.Font("Monaco, Courier New", 16, this.focusColor);
+        this.menuItemArray.setFont(font, number);
             
     },
     "drawWords" : function drawWords(message, width, height, font) {
     	
-        var w = Math.min(this.font.measureText(this.context, message).width, c.WIDTH);    
+        var w = Math.min(font.measureText(this.context, message).width, c.WIDTH);    
         this.context.save();
 		font.draw(this.context, message, width, height);    
         this.context.restore();
 
     },   
+
+    "ende" : function ende(){
+    	me.state.change(me.state.PLAY);
+    },
+
+    "save" : function save(){
+
+    },
+     "myoptions" : function myoptions(){
+
+    },
+     "bag" : function bag(){
+
+    },
 
 
 });
@@ -105,18 +152,33 @@ game.MenuScreen = me.ScreenObject.extend(
 		
 	};
 
+	this.setFont = function (font, id){
+		this.array[id].setFont(font);
+	};
+
+	this.getName = function (id){
+		return this.array[id].name;
+	};
+
+	this.getFont = function (id){
+		return this.array[id].font;
+	};
+
+
 }
 
 function menuItem (name, number){
 	this.name = name;
 	this.number = number;
+	this.font = new me.Font("Monaco, Courier New", 16, "#000");
 	
-	this.menuAction = function (){
-		// do something
-	};
 
 	this.getPosition = function(){
 		return 20;
+	};
+
+	this.setFont = function(font){
+		this.font = font;
 	};
 };
 
