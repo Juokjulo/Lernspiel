@@ -1,7 +1,7 @@
 /*-------------------
 a player entity
 -------------------------------- */
-var PlayerEntity = me.ObjectEntity.extend({
+var PlayerEntity = NPCEntity.extend({
     /* -----
  
     constructor
@@ -101,6 +101,9 @@ var PlayerEntity = me.ObjectEntity.extend({
         return false;
     },
     
+    "getMaxKnowledge": function getMaxKnowledge(){
+        return this.playerLevel * 20;
+    }
             
  
 });

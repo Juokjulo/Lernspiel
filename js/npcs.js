@@ -55,7 +55,7 @@ var KayEntity = NPCEntity.extend({
         this.isInteracting = true;
         game.dialog(["Ping uh i u u ju u ju u u ju uv u u u z  uz z z z z  uz u u u  u u u u i u ", "fdsc"]);
             
-        game.fight(this);
+        game.fight(this, actor);
         
        
     },
@@ -82,7 +82,7 @@ var PutzEntity = NPCEntity.extend({
     },
     interact: function(actor) {
         
-        game.fight(this);
+        game.fight(this, actor);
         
        
     },
