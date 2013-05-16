@@ -28,7 +28,18 @@ game.g_resources = {
         /* klassenzimmer */
         "ZanyZora_Klassenzimmer",
         "metatiles32x32",
-        "tiles9"
+        "tiles9",
+        "tiles6",
+        "tilec2",
+        "tiled2",
+        "tiled3",
+        "tilee3",
+        "tilee4",
+        "Rabu_Innenraum",
+        "rtp-einem_vonenterbrain-dragoondart",
+        "ZanyZora_Sachen",
+        "School01",
+        "Bar_Tana"
         
     ],
 
@@ -36,7 +47,8 @@ game.g_resources = {
     "map" : [
         "KlassenzimmerStart",
         "Flur1",
-        "Georaum"
+        "Georaum",
+        "Chemieraum"
     ],
 
     "icon" : [
