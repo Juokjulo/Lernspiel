@@ -44,8 +44,8 @@ var KayEntity = NPCEntity.extend({
         this.parent(x, y, settings);
         // set the default horizontal & vertical speed (accel vector)
         // adjust the bounding box
-        this.username = "Kay";
-        this.playerLevel = 1;
+        this.username = "Klassenlehrerin";
+        this.playerLevel = 100;
         this.interactionImage = "kay_player";
         
         this.setCurrentAnimation("down");

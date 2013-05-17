@@ -93,7 +93,7 @@ me.sys.gravity = 0;
 //me.sys.dirtyRegion = true; // Be fast!
 //me.sys.useNativeAnimFrame = true; // Be faster!
 //cm.setSync(false); // Be fastest!
-me.debug.renderHitBox = true;
+//me.debug.renderHitBox = true;
 //me.debug.renderCollisionMap = true;
 me.sys.stopOnAudioError = false;
 

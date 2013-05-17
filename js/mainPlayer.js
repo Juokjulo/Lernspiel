@@ -106,9 +106,13 @@ var PlayerEntity = NPCEntity.extend({
     },
     
     "getMaxKnowledge": function getMaxKnowledge(){
-        return this.playerLevel * 20;
+        return game.level * 20;
+    }, 
+
+    "getEnergypoints": function getEnergypoints(){
+        return game.level * 10;
     }
-            
+
  
 });
 

@@ -35,12 +35,19 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.levelTeammate = teammate.playerLevel;
         this.energypointsTeammate = teammate.getEnergypoints();
         this.myLevel = game.level;
-        this.myEnergypoints = mainplayer.getEnergypoints();
+        this.myEnergypoints = game.energypoints;
         this.myknowledgePoints = game.knowledgePoints;
 
+        //Array fuer Linien initialisieren
         this.energyTeammateArray = [47,85,221,85,221]; 
         this.myEnergyArray = [435,352,603,352,603];
         this.myKnowledgeArray = [435,382,435,382,603];
+
+        var newWidth = (this.myknowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
+        this.myKnowledgeArray[2] = this.myKnowledgeArray[0] + newWidth;
+        newWidth = (this.myEnergypoints/this.mainplayer.getEnergypoints())* (this.myEnergyArray[4] - this.myEnergyArray[0]);
+        this.myEnergyArray[2] = this.myEnergyArray[0] + newWidth;
+        
         // Render text to buffer canvas.
         this.canvas = document.createElement("canvas");
 
@@ -93,6 +100,7 @@ game.InteractionScreen = me.ScreenObject.extend(
                              this.myKnowledgeArray[2], this.myKnowledgeArray[3],'#0080FF');
                         this.winLoseMessage = "Gut gemacht, du gewinnst "+ gainPoints +" Wissenspunkte!";
                         this.end();
+                        this.sendPostRequest();
                         return;
                     }
                 
@@ -103,6 +111,7 @@ game.InteractionScreen = me.ScreenObject.extend(
                     this.newWidthLostMain(energylost);
                     this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
                         this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
+                    this.sendPostRequest();
                     if (this.myEnergypoints === 0){
                         this.winLoseMessage = "Oh nein, du hast leider verloren!";
                         this.relexMessage = "Ruh dich aus, damit du wieder neue Energie hast.";
@@ -172,11 +181,11 @@ game.InteractionScreen = me.ScreenObject.extend(
         
         	
         this.drawWords(this.teammate.username , 45, 50, this.font);
-        this.drawWords("lv:" + this.levelTeammate,170, 50, this.font);
+        this.drawWords("lv:" + this.levelTeammate,535, 100, this.font);
         this.drawWords(this.energypointsTeammate + "/" + this.teammate.getEnergypoints(),100, 80, this.font);
 		this.drawWords(game.username , 435, 320,this.font);
-        this.drawWords("lv:" + this.myLevel , 560, 320,this.font);
-        this.drawWords(this.myEnergypoints + "/" + game.energypoints, 490, 348,this.font);
+        this.drawWords("lv:" + this.myLevel , 150, 300,this.font);
+        this.drawWords(this.myEnergypoints + "/" + this.mainplayer.getEnergypoints(), 490, 348,this.font);
         this.drawWords(this.myknowledgePoints + "/" + this.mainplayer.getMaxKnowledge(), 490, 378,this.font);
 		this.drawWords(this.word, 100, 150, this.font);
         this.drawWords(this.usermessage, 100, 180, this.font);
@@ -253,12 +262,14 @@ game.InteractionScreen = me.ScreenObject.extend(
    },
 
     "newWidthGain" : function newWidthGain(gain){
-        if (this.myknowledgePoints + gain < this.mainplayer.getMaxKnowledge()){
-            this.myknowledgePoints = this.myknowledgePoints + gain;
-        } else{
-             this.myknowledgePoints = this.myknowledgePoints + gain - this.mainplayer.getMaxKnowledge();
-             game.level++;
+        this.myknowledgePoints = this.myknowledgePoints + gain;
+        if (this.myknowledgePoints > this.mainplayer.getMaxKnowledge()){
+            game.level++;
+            game.energypoints = this.mainplayer.getEnergypoints();
+            this.myEnergypoints = game.energypoints;
+            this.myLevel = game.level;
         } 
+             
         var newWidth = (this.myknowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
         this.myKnowledgeArray[2] = this.myKnowledgeArray[0] + newWidth;
         
@@ -282,6 +293,15 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.wordRight = "";
         this.sentence = "";
         this.focus = "ende";
+   },
+
+    "sendPostRequest" : function sendPostRequest(){
+        game.energypoints = this.myEnergypoints;
+        game.knowledgePoints = this.myknowledgePoints;
+        game.level = this.myLevel;
+        data = { "stats": {"level": game.level, "duration" : 10, 
+        "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints}};
+        jQuery.post( "http://localhost:3000/elli/update_stats" ,data );
    }
 
 });

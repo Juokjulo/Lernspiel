@@ -19,7 +19,6 @@ function word (correct, wrong, exampleSentence){
 
 game.username = "";
 game.words = [];
-game.score = 0;
 game.playtime = 0;
 game.energypoints = 100;
 game.level = 1;
@@ -31,7 +30,6 @@ game.loadFromDatabase = function loadFromDatabase(){
            game.words.push(newWord);
     });
     game.username = this.database_resources.user.username;
-    game.score = this.database_resources.user.userscore;
     game.playtime = this.database_resources.user.playduration;
     game.energypoints = this.database_resources.user.userEnergyPoints;
     game.level = this.database_resources.user.userLevel;
