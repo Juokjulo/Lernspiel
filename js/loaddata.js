@@ -23,6 +23,7 @@ game.playtime = 0;
 game.energypoints = 100;
 game.level = 1;
 game.knowledgePoints = 0;
+game.score = 0;
 
 game.loadFromDatabase = function loadFromDatabase(){
 	this.database_resources["words"].forEach(function forEach(value) {
@@ -33,7 +34,7 @@ game.loadFromDatabase = function loadFromDatabase(){
     game.playtime = this.database_resources.user.playduration;
     game.energypoints = this.database_resources.user.userEnergyPoints;
     game.level = this.database_resources.user.userLevel;
-    game.knowledgePoints = this.database_resources.user.userKnowledgePoints
+    game.knowledgePoints = this.database_resources.user.userKnowledgePoints;
 
 }
 

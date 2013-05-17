@@ -34,7 +34,7 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.heading = "Welche Schreibweise ist richtig?";
         this.levelTeammate = teammate.playerLevel;
         this.energypointsTeammate = teammate.getEnergypoints();
-        
+
         //Array fuer Linien initialisieren
         this.energyTeammateArray = [47,85,221,85,221]; 
         this.myEnergyArray = [435,352,603,352,603];
@@ -259,17 +259,30 @@ game.InteractionScreen = me.ScreenObject.extend(
    },
 
     "newWidthGain" : function newWidthGain(gain){
-        game.knowledgePoints = game.knowledgePoints + gain;
-        if (game.knowledgePoints > this.mainplayer.getMaxKnowledge()){
-            game.level++;
+    
+        if (game.knowledgePoints + gain > this.mainplayer.getMaxKnowledge()){
+            game.knowledgePoints = game.knowledgePoints + gain;
+            this.levelUp();
             game.energypoints = this.mainplayer.getEnergypoints();
 
-        } 
+        } else {
+            game.knowledgePoints = game.knowledgePoints + gain;
+        }
              
         var newWidth = (game.knowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
         this.myKnowledgeArray[2] = this.myKnowledgeArray[0] + newWidth;
         
    },
+
+    "levelUp" : function levelUp(){
+        game.knowledgePoints =  game.knowledgePoints - this.mainplayer.getMaxKnowledge();
+        game.level++;
+        if (game.knowledgePoints > this.mainplayer.getMaxKnowledge()) {
+            return this.levelUp();
+        };
+
+
+    },
   
    "getRandomWord" : function getRandomWord(){
         if(game.words.length === this.usedWords.length){
@@ -295,6 +308,7 @@ game.InteractionScreen = me.ScreenObject.extend(
         data = { "stats": {"level": game.level, "duration" : 10, 
         "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints}};
         jQuery.post( "http://localhost:3000/elli/update_stats" ,data );
+
    }
 
 });
