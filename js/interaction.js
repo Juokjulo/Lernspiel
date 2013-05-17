@@ -29,23 +29,20 @@ game.InteractionScreen = me.ScreenObject.extend(
 
         this.font = new me.Font("Monaco, Courier New", 16, this.normalTextColor);
         this.changeFocusColor(this.focusColor, this.normalTextColor, this.normalTextColor);
-        this.focus = "left";
+        this.focus = c.FOCUS_LEFT;
 
         this.heading = "Welche Schreibweise ist richtig?";
         this.levelTeammate = teammate.playerLevel;
         this.energypointsTeammate = teammate.getEnergypoints();
-        this.myLevel = game.level;
-        this.myEnergypoints = game.energypoints;
-        this.myknowledgePoints = game.knowledgePoints;
-
+        
         //Array fuer Linien initialisieren
         this.energyTeammateArray = [47,85,221,85,221]; 
         this.myEnergyArray = [435,352,603,352,603];
         this.myKnowledgeArray = [435,382,435,382,603];
 
-        var newWidth = (this.myknowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
+        var newWidth = (game.knowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
         this.myKnowledgeArray[2] = this.myKnowledgeArray[0] + newWidth;
-        newWidth = (this.myEnergypoints/this.mainplayer.getEnergypoints())* (this.myEnergyArray[4] - this.myEnergyArray[0]);
+        newWidth = (game.energypoints/this.mainplayer.getEnergypoints())* (this.myEnergyArray[4] - this.myEnergyArray[0]);
         this.myEnergyArray[2] = this.myEnergyArray[0] + newWidth;
         
         // Render text to buffer canvas.
@@ -74,18 +71,18 @@ game.InteractionScreen = me.ScreenObject.extend(
    
     "update" : function update() {
         if (me.input.isKeyPressed("action") ) {
-        	if (this.focus === "abbrechen"){
+        	if (this.focus === c.FOCUS_CANCEL){
         		me.state.change(me.state.PLAY);
 
         	}
-            if (this.focus === "ende"){
+            if (this.focus === c.FOCUS_END){
                 me.state.change(me.state.PLAY);
 
             }
-        	if (this.focus === "left" || this.focus === "right" ){
+        	if (this.focus === c.FOCUS_LEFT || this.focus === c.FOCUS_RIGHT ){
                 var energylost = this.energylost();
-                if ((this.wordLeft === game.words[this.wordNumber].correct && this.focus === "left" ) ||
-                    (this.wordRight === game.words[this.wordNumber].correct && this.focus === "right" ) ){
+                if ((this.wordLeft === game.words[this.wordNumber].correct && this.focus === c.FOCUS_LEFT ) ||
+                    (this.wordRight === game.words[this.wordNumber].correct && this.focus === c.FOCUS_RIGHT ) ){
 
                     this.word = "Stimmt, '"+ game.words[this.wordNumber].correct +"' ist richtig.";
                     this.wordNumber = this.getRandomWord();
@@ -112,7 +109,7 @@ game.InteractionScreen = me.ScreenObject.extend(
                     this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
                         this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
                     this.sendPostRequest();
-                    if (this.myEnergypoints === 0){
+                    if (game.energypoints === 0){
                         this.winLoseMessage = "Oh nein, du hast leider verloren!";
                         this.relexMessage = "Ruh dich aus, damit du wieder neue Energie hast.";
                         this.end();
@@ -128,24 +125,24 @@ game.InteractionScreen = me.ScreenObject.extend(
 
 
         } else if (me.input.isKeyPressed("left") ) {
-            if (this.focus != "ende"){
+            if (this.focus != c.FOCUS_END){
                 this.changeFocusColor(this.focusColor, this.normalTextColor, this.normalTextColor);
-                this.focus = "left";
+                this.focus = c.FOCUS_LEFT;
             }
         } else if (me.input.isKeyPressed("right") ) {
-            if (this.focus == "left" && this.focus != "ende"){
+            if (this.focus == c.FOCUS_LEFT && this.focus != c.FOCUS_END){
                 this.changeFocusColor(this.normalTextColor, this.focusColor,this.normalTextColor);
-                this.focus = "right";
+                this.focus = c.FOCUS_RIGHT;
             }
         } else if (me.input.isKeyPressed("down") ) {
             this.changeFocusColor(this.normalTextColor, this.normalTextColor,this.focusColor);
-            if (this.focus != "ende"){
-                this.focus = "abbrechen";
+            if (this.focus != c.FOCUS_END){
+                this.focus = c.FOCUS_CANCEL;
             }
         } else if(me.input.isKeyPressed("up") ){
-            if (this.focus == "abbrechen" && this.focus != "ende"){
+            if (this.focus == c.FOCUS_CANCEL && this.focus != c.FOCUS_END){
                 this.changeFocusColor(this.normalTextColor, this.focusColor, this.normalTextColor);
-                this.focus = "right";
+                this.focus = c.FOCUS_RIGHT;
             }
         }
         return this.parent() || (this.fader !== -1);
@@ -184,9 +181,9 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.drawWords("lv:" + this.levelTeammate,535, 100, this.font);
         this.drawWords(this.energypointsTeammate + "/" + this.teammate.getEnergypoints(),100, 80, this.font);
 		this.drawWords(game.username , 435, 320,this.font);
-        this.drawWords("lv:" + this.myLevel , 150, 300,this.font);
-        this.drawWords(this.myEnergypoints + "/" + this.mainplayer.getEnergypoints(), 490, 348,this.font);
-        this.drawWords(this.myknowledgePoints + "/" + this.mainplayer.getMaxKnowledge(), 490, 378,this.font);
+        this.drawWords("lv:" + game.level , 150, 300,this.font);
+        this.drawWords(game.energypoints + "/" + this.mainplayer.getEnergypoints(), 490, 348,this.font);
+        this.drawWords(game.knowledgePoints + "/" + this.mainplayer.getMaxKnowledge(), 490, 378,this.font);
 		this.drawWords(this.word, 100, 150, this.font);
         this.drawWords(this.usermessage, 100, 180, this.font);
         this.drawWords(this.sentence, 100, 210, this.font);
@@ -249,12 +246,12 @@ game.InteractionScreen = me.ScreenObject.extend(
    },
     
     "newWidthLostMain" : function newWidthLostMain(energylost){
-        if (energylost < this.myEnergypoints ){
-            this.myEnergypoints = this.myEnergypoints - energylost;
-            var newWidth = (this.myEnergypoints/this.mainplayer.getEnergypoints())* (this.myEnergyArray[4] - this.myEnergyArray[0]);
+        if (energylost < game.energypoints){
+            game.energypoints = game.energypoints - energylost;
+            var newWidth = (game.energypoints/this.mainplayer.getEnergypoints())* (this.myEnergyArray[4] - this.myEnergyArray[0]);
             this.myEnergyArray[2] = this.myEnergyArray[0] + newWidth;
         } else{
-             this.myEnergypoints = 0;
+             game.energypoints = 0;
              this.myEnergyArray[2] = this.myEnergyArray[0];
         } 
         
@@ -262,15 +259,14 @@ game.InteractionScreen = me.ScreenObject.extend(
    },
 
     "newWidthGain" : function newWidthGain(gain){
-        this.myknowledgePoints = this.myknowledgePoints + gain;
-        if (this.myknowledgePoints > this.mainplayer.getMaxKnowledge()){
+        game.knowledgePoints = game.knowledgePoints + gain;
+        if (game.knowledgePoints > this.mainplayer.getMaxKnowledge()){
             game.level++;
             game.energypoints = this.mainplayer.getEnergypoints();
-            this.myEnergypoints = game.energypoints;
-            this.myLevel = game.level;
+
         } 
              
-        var newWidth = (this.myknowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
+        var newWidth = (game.knowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
         this.myKnowledgeArray[2] = this.myKnowledgeArray[0] + newWidth;
         
    },
@@ -292,13 +288,10 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.wordLeft = "";
         this.wordRight = "";
         this.sentence = "";
-        this.focus = "ende";
+        this.focus = c.FOCUS_END;
    },
 
     "sendPostRequest" : function sendPostRequest(){
-        game.energypoints = this.myEnergypoints;
-        game.knowledgePoints = this.myknowledgePoints;
-        game.level = this.myLevel;
         data = { "stats": {"level": game.level, "duration" : 10, 
         "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints}};
         jQuery.post( "http://localhost:3000/elli/update_stats" ,data );
