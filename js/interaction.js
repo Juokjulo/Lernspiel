@@ -40,11 +40,9 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.myEnergyArray = [435,352,603,352,603];
         this.myKnowledgeArray = [435,382,435,382,603];
 
-        var newWidth = (game.knowledgePoints/this.mainplayer.getMaxKnowledge()) * (this.myKnowledgeArray[4] - this.myKnowledgeArray[0]);
-        this.myKnowledgeArray[2] = this.myKnowledgeArray[0] + newWidth;
-        newWidth = (game.energypoints/this.mainplayer.getEnergypoints())* (this.myEnergyArray[4] - this.myEnergyArray[0]);
-        this.myEnergyArray[2] = this.myEnergyArray[0] + newWidth;
-        
+        this.newWidthLostMain(0);
+        this.newWidthGain(0);
+     
         // Render text to buffer canvas.
         this.canvas = document.createElement("canvas");
 
@@ -264,7 +262,8 @@ game.InteractionScreen = me.ScreenObject.extend(
             game.knowledgePoints = game.knowledgePoints + gain;
             this.levelUp();
             game.energypoints = this.mainplayer.getEnergypoints();
-
+            var newWidth = (game.energypoints/this.mainplayer.getEnergypoints())* (this.myEnergyArray[4] - this.myEnergyArray[0]);
+            this.myEnergyArray[2] = this.myEnergyArray[0] + newWidth;
         } else {
             game.knowledgePoints = game.knowledgePoints + gain;
         }
