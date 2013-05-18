@@ -86,13 +86,9 @@ game.InteractionScreen = me.ScreenObject.extend(
                     this.wordNumber = this.getRandomWord();
                     this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
                     this.newWidthLostTeammate(energylost);
-                    this.drawLine(this.energyTeammateArray[4],this.energyTeammateArray[3],
-                        this.energyTeammateArray[2], this.energyTeammateArray[3], '#000000');
                     if (this.energypointsTeammate === 0) { 
                         var gainPoints = this.getMoreKnowledge();
                         this.newWidthGain(gainPoints);
-                        this.drawLine(this.myKnowledgeArray[0],this.myKnowledgeArray[1], 
-                             this.myKnowledgeArray[2], this.myKnowledgeArray[3],'#0080FF');
                         this.winLoseMessage = "Gut gemacht, du gewinnst "+ gainPoints +" Wissenspunkte!";
                         this.end();
                         this.sendPostRequest();
@@ -104,8 +100,6 @@ game.InteractionScreen = me.ScreenObject.extend(
                     this.wordNumber = this.getRandomWord();
                     this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
                     this.newWidthLostMain(energylost);
-                    this.drawLine(this.myEnergyArray[4],this.myEnergyArray[3],
-                        this.myEnergyArray[2], this.myEnergyArray[3], '#000000');
                     this.sendPostRequest();
                     if (game.energypoints === 0){
                         this.winLoseMessage = "Oh nein, du hast leider verloren!";
