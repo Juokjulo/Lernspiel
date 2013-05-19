@@ -17,8 +17,28 @@ function word (correct, wrong, exampleSentence){
 	}
 };
 
+function WordsArray(category){
+	this.array = [];
+	this.category = category;
+
+	this.push = function (value){
+		for (var i in value) {
+			this.array.push(value[i]);
+		};
+		
+	};
+
+	this.pop = function (){
+		this.array.pop();
+	};
+
+
+
+};
+
 game.username = "";
 game.words = [];
+game.categoryArray = [];
 game.playtime = 0;
 game.energypoints = 100;
 game.level = 1;
@@ -26,9 +46,10 @@ game.knowledgePoints = 0;
 game.score = 0;
 
 game.loadFromDatabase = function loadFromDatabase(){
-	this.database_resources["words"].forEach(function forEach(value) {
-           var newWord = new word(value[0], value[1], value[2]);
-           game.words.push(newWord);
+	this.database_resources["categories"].forEach(function forEach(value) {
+         	console.log(value[0]);
+           //var newWord = new word(value[0], value[1], value[2]);
+           //game.words.push(newWord);
     });
     game.username = this.database_resources.user.username;
     game.playtime = this.database_resources.user.playduration;
