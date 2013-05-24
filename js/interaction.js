@@ -20,12 +20,12 @@ game.InteractionScreen = me.ScreenObject.extend(
         this.usedWords = [];
         this.wordNumber = this.getRandomWord();
         this.word = "";
-        this.sentence = game.words[this.wordNumber].exampleSentence;
+        this.sentence = game.categoryArray.get(this.wordNumber).exampleSentence;
         this.usermessage = "";
         this.winLoseMessage = "";
         this.relexMessage = "";
-        this.wordLeft = game.words[this.wordNumber].random();
-        this.wordRight = game.words[this.wordNumber].other(this.wordLeft);
+        this.wordLeft = game.categoryArray.get(this.wordNumber).random();
+        this.wordRight = game.categoryArray.get(this.wordNumber).other(this.wordLeft);
 
         this.font = new me.Font("Monaco, Courier New", 16, this.normalTextColor);
         this.changeFocusColor(this.focusColor, this.normalTextColor, this.normalTextColor);
@@ -79,10 +79,10 @@ game.InteractionScreen = me.ScreenObject.extend(
             }
         	if (this.focus === c.FOCUS_LEFT || this.focus === c.FOCUS_RIGHT ){
                 var energylost = this.energylost();
-                if ((this.wordLeft === game.words[this.wordNumber].correct && this.focus === c.FOCUS_LEFT ) ||
-                    (this.wordRight === game.words[this.wordNumber].correct && this.focus === c.FOCUS_RIGHT ) ){
+                if ((this.wordLeft === game.categoryArray.get(this.wordNumber).correct && this.focus === c.FOCUS_LEFT ) ||
+                    (this.wordRight === game.categoryArray.get(this.wordNumber).correct && this.focus === c.FOCUS_RIGHT ) ){
 
-                    this.word = "Stimmt, '"+ game.words[this.wordNumber].correct +"' ist richtig.";
+                    this.word = "Stimmt, '"+ game.categoryArray.get(this.wordNumber).correct +"' ist richtig.";
                     this.wordNumber = this.getRandomWord();
                     this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
                     this.newWidthLostTeammate(energylost);
@@ -96,7 +96,7 @@ game.InteractionScreen = me.ScreenObject.extend(
                     }
                 
                 }else { 
-                    this.word = "Falsch, das richtige Wort ist: '"+ game.words[this.wordNumber].correct + "'";
+                    this.word = "Falsch, das richtige Wort ist: '"+ game.categoryArray.get(this.wordNumber).correct + "'";
                     this.wordNumber = this.getRandomWord();
                     this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
                     this.newWidthLostMain(energylost);
@@ -109,9 +109,9 @@ game.InteractionScreen = me.ScreenObject.extend(
                     }
                 }
                 
-        		this.wordLeft = game.words[this.wordNumber].random();
-        		this.wordRight = game.words[this.wordNumber].other(this.wordLeft);
-                this.sentence = game.words[this.wordNumber].exampleSentence;
+        		this.wordLeft = game.categoryArray.get(this.wordNumber).random();
+        		this.wordRight = game.categoryArray.get(this.wordNumber).other(this.wordLeft);
+                this.sentence = game.categoryArray.get(this.wordNumber).exampleSentence;
         	}
             
 
@@ -278,10 +278,10 @@ game.InteractionScreen = me.ScreenObject.extend(
     },
   
    "getRandomWord" : function getRandomWord(){
-        if(game.words.length === this.usedWords.length){
+        if(game.categoryArray.arraySize() === this.usedWords.length){
             this.usedWords = [];
         }
-        var number = Math.round(Math.random() * (game.words.length-1));
+        var number = Math.round(Math.random() * (game.categoryArray.arraySize() - 1));
         for (var i in this.usedWords){
             if (number == this.usedWords[i]) {return this.getRandomWord()};
 

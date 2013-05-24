@@ -34,30 +34,29 @@ function WordsArray(category){
 	}
 };
 
-game.categoryArray = function(){
+ function CategoryArray (){
 	this.array = [];
+	this.uncategorizedArray = [];
 	this.selectedCategory = -1; // -1 keine Kategorie ausgewaehlt, Worte aus allen Kategorien
-
-	this.MaxSize = function(){
-		this.maxSize = 0;
-		for (var i in this.array) {
-         	 	
-        };
-	};
 
 	this.push = function (value){
 		this.array.push(value);	
 	};
 
+	this.pushWithoutCategory = function (value){
+		this.uncategorizedArray.push(value);	
+	};
+
 	this.get = function (i){
 		if (this.selectedCategory < 0){
-			return 
+			return this.uncategorizedArray[i];
 		}
+		return this.array[this.selectedCategory].get(i);
 	};
 
 	this.arraySize = function (){
 		if (this.selectedCategory < 0){
-			return this.maxSize;
+			return this.uncategorizedArray.length;
 		}
 		return this.array[this.selectedCategory].length;
 	};
@@ -65,8 +64,8 @@ game.categoryArray = function(){
 
 };
 
+game.categoryArray = new CategoryArray();
 game.username = "";
-game.words = [];
 game.playtime = 0;
 game.energypoints = 100;
 game.level = 1;
@@ -75,17 +74,15 @@ game.score = 0;
 
 game.loadFromDatabase = function loadFromDatabase(){
 	this.database_resources["categories"].forEach(function forEach(value) {
-         	console.log(value.elli_rpg_words[0]);
          	var newWordsArray = new WordsArray(value.name);
-
          	for (var i in value.elli_rpg_words) {
          	 	var newWord = new word(value.elli_rpg_words[i].correct, value.elli_rpg_words[i].wrong, 
          	 		value.elli_rpg_words[i].example);
            		newWordsArray.push(newWord);
+           		game.categoryArray.pushWithoutCategory(newWord);
          	 }; 
  			game.categoryArray.push(newWordsArray);
     });
-    game.categoryArray.MaxSize();
     game.username = this.database_resources.user.username;
     game.playtime = this.database_resources.user.playduration;
     game.energypoints = this.database_resources.user.userEnergyPoints;
