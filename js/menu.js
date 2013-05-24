@@ -142,6 +142,10 @@ game.MenuScreen = me.ScreenObject.extend(
 
     },
 
+     "showHighscore" : function showHighscore(){
+
+    },
+
     "profil" : function profil(){
     	this.context.save;
     	var background = game.getImage("profil");

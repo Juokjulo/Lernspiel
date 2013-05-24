@@ -2,6 +2,11 @@
 game.PlayScreen = me.ScreenObject.extend(
 {
 
+   init: function()
+   {
+
+   }, 
+   
    onResetEvent: function()
 	{	
       // stuff to reset on state change

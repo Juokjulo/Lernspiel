@@ -37,7 +37,7 @@ var NPCEntity = me.ObjectEntity.extend({
 
 });
 
-var KayEntity = NPCEntity.extend({
+var ClassTeacherEntity = NPCEntity.extend({
     
     init: function(x, y, settings) {
         // call the constructor
@@ -46,7 +46,7 @@ var KayEntity = NPCEntity.extend({
         // adjust the bounding box
         this.username = "Klassenlehrerin";
         this.playerLevel = 100;
-        this.interactionImage = "kay_player";
+        this.interactionImage = "class_player";
         
         this.setCurrentAnimation("down");
 

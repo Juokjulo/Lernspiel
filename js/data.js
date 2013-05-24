@@ -6,10 +6,10 @@ game.g_resources = {
       
         // Characters
         "chars_blue",
-        "chars_kay",
+        "chars_class",
         "chars_putz",
         "blue_player",
-        "kay_player",
+        "class_player",
         "putz_player",
 
 
