@@ -1,7 +1,8 @@
-function word (correct, wrong, exampleSentence){
+function word (correct, wrong, exampleSentence, id){
 	this.correct = correct;
 	this.wrong = wrong;
 	this.exampleSentence = exampleSentence;
+	this.id = id;
 
 	this.random = function (){
 		var randomNum = Math.round(Math.random());
@@ -32,6 +33,10 @@ function WordsArray(category){
 	this.get = function (i){
 		return this.array[i];
 	}
+
+	this.getID = function (i){
+		return this.array[i].id;
+	}
 };
 
  function CategoryArray (){
@@ -54,13 +59,33 @@ function WordsArray(category){
 		return this.array[this.selectedCategory].get(i);
 	};
 
+	this.getID = function (i){
+		if (this.selectedCategory < 0){
+			return this.uncategorizedArray[i].id;
+		}
+		return this.array[this.selectedCategory].getID(i);
+	}
+
 	this.arraySize = function (){
 		if (this.selectedCategory < 0){
 			return this.uncategorizedArray.length;
 		}
-		return this.array[this.selectedCategory].length;
+		return this.array[this.selectedCategory].array.length;
 	};
 
+	this.getSelectionID = function (name){
+		for (var i = 0; i <= this.array.length - 1; i++ ) {
+			if (this.array[i].category == name){
+				return i;
+			}
+		};
+		return -1;
+
+	};
+
+	this.getCategory = function (i){
+		return this.array[i].category;
+	};
 
 };
 
@@ -75,9 +100,9 @@ game.score = 0;
 game.loadFromDatabase = function loadFromDatabase(){
 	this.database_resources["categories"].forEach(function forEach(value) {
          	var newWordsArray = new WordsArray(value.name);
-         	for (var i in value.elli_rpg_words) {
+         	for (var i = 0; i <= value.elli_rpg_words.length - 1; i++ ) {
          	 	var newWord = new word(value.elli_rpg_words[i].correct, value.elli_rpg_words[i].wrong, 
-         	 		value.elli_rpg_words[i].example);
+         	 		value.elli_rpg_words[i].example, value.elli_rpg_words[i].id);
            		newWordsArray.push(newWord);
            		game.categoryArray.pushWithoutCategory(newWord);
          	 }; 
@@ -88,6 +113,7 @@ game.loadFromDatabase = function loadFromDatabase(){
     game.energypoints = this.database_resources.user.userEnergyPoints;
     game.level = this.database_resources.user.userLevel;
     game.knowledgePoints = this.database_resources.user.userKnowledgePoints;
+    game.score = this.database_resources.user.userscore;
 
 }
 

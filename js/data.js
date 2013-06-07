@@ -20,7 +20,8 @@ game.g_resources = {
         "hintergrund",
         "menu",
         "fight",
-        "profil"
+        "profil",
+        "leer"
 
 
     ],

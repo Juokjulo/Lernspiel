@@ -17,8 +17,9 @@ var game	=
 		{
 			alert("Sorry but your browser does not support html 5 canvas.");
 			return;
-		}
-				
+		} 
+		var now = new Date();
+		game.startTime = Math.round(now.getTime()/1000);
 		// initialize the "audio"
 		me.audio.init("mp3,ogg");
 		
@@ -44,14 +45,18 @@ var game	=
 	{
 		// set the "Play/Ingame" Screen Object
 		me.state.set(me.state.PLAY, new game.PlayScreen(20));
-
+ 
 		// add our player entity in the entity pool
 		me.entityPool.add("mainPlayer", PlayerEntity);
 		me.entityPool.add("classTeacher", ClassTeacherEntity);
 		me.entityPool.add("putz", PutzEntity);
 		me.entityPool.add("me.LevelEntity", me.LevelEntity);
 			  
-		
+		// enable the keyboard
+		me.input.bindKey(me.input.KEY.LEFT,  "left", false);
+  		me.input.bindKey(me.input.KEY.RIGHT, "right", false);
+ 		me.input.bindKey(me.input.KEY.UP,  "up", false);
+  		me.input.bindKey(me.input.KEY.DOWN, "down", false);
    		me.input.bindKey(me.input.KEY.ENTER, "action", true);
   		me.input.bindKey(me.input.KEY.SPACE, "menu", true);
 

@@ -81,13 +81,18 @@ game.InteractionScreen = me.ScreenObject.extend(
                 var energylost = this.energylost();
                 if ((this.wordLeft === game.categoryArray.get(this.wordNumber).correct && this.focus === c.FOCUS_LEFT ) ||
                     (this.wordRight === game.categoryArray.get(this.wordNumber).correct && this.focus === c.FOCUS_RIGHT ) ){
+                    
+                    this.sendStatisticPostRequest(game.categoryArray.getID(this.wordNumber),true);
 
                     this.word = "Stimmt, '"+ game.categoryArray.get(this.wordNumber).correct +"' ist richtig.";
                     this.wordNumber = this.getRandomWord();
                     this.usermessage = "Dein Mitspieler verliert "+ energylost +" Energiepunkte!";
                     this.newWidthLostTeammate(energylost);
+                    this.sendPostRequest();
+
                     if (this.energypointsTeammate === 0) { 
                         var gainPoints = this.getMoreKnowledge();
+                        game.score = game.score + gainPoints;
                         this.newWidthGain(gainPoints);
                         this.winLoseMessage = "Gut gemacht, du gewinnst "+ gainPoints +" Wissenspunkte!";
                         this.end();
@@ -96,6 +101,7 @@ game.InteractionScreen = me.ScreenObject.extend(
                     }
                 
                 }else { 
+                    this.sendStatisticPostRequest(game.categoryArray.getID(this.wordNumber),false);
                     this.word = "Falsch, das richtige Wort ist: '"+ game.categoryArray.get(this.wordNumber).correct + "'";
                     this.wordNumber = this.getRandomWord();
                     this.usermessage = "Du verlierst "+ energylost +" Energiepunkte!";
@@ -298,10 +304,18 @@ game.InteractionScreen = me.ScreenObject.extend(
    },
 
     "sendPostRequest" : function sendPostRequest(){
-        data = { "stats": {"level": game.level, "duration" : 10, 
-        "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints}};
-        jQuery.post( "http://localhost:3000/elli/update_stats" ,data );
+        var now = new Date();
+        game.playtime = game.playtime + (Math.round(now.getTime()/1000) - game.startTime);
+        game.startTime = Math.round(now.getTime()/1000);
+        data = { "stats": {"level": game.level, "duration" : game.playtime, 
+        "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints, "score": game.score}};
+        jQuery.post( "./elli/update_stats" ,data );
 
+   },
+
+   "sendStatisticPostRequest" : function sendStatisticPostRequest(id, correct){
+        data = { "word_stats": {"word_id": id, "correct" : correct }}
+        jQuery.post( "./elli/update_word_statistics" ,data )
    }
 
 });

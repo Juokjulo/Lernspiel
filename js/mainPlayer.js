@@ -1,7 +1,12 @@
+
+    
+       
+
+
 /*-------------------
 a player entity
 -------------------------------- */
-var PlayerEntity = NPCEntity.extend({
+var PlayerEntity = me.ObjectEntity.extend({
     /* -----
  
     constructor
@@ -16,11 +21,15 @@ var PlayerEntity = NPCEntity.extend({
 	
 	// adjust the bounding box
 	this.updateColRect(2, 28, 22, 8);
-    this.interactionImage = "blue_player",
+    this.interactionImage = "blue_player";
 	this.addAnimation ("down", [0,1,2]);
 	this.addAnimation ("left", [3,4,5]);
 	this.addAnimation ("right", [6,7,8]);
 	this.addAnimation ("up", [9,10,11]);
+ 
+    me.state.set(me.state.MENU, new MainMenu(this));
+    me.state.set(c.PROFIL, new ProfilSubMenu(this));
+    me.state.set(c.OPTIONS, new OptionsSubMenu(this));
 	
 	 // Rachel's mass is always 1.
         //this.body.setMass(1);
@@ -83,9 +92,9 @@ var PlayerEntity = NPCEntity.extend({
             return true;
         }
         
-    if (me.input.isKeyPressed('menu') ) {     
-        me.state.set(me.state.Menu, new game.MenuScreen(this));
-        me.state.change(me.state.Menu);      
+    if (me.input.isKeyPressed('menu') ) {  
+    
+        me.state.change(me.state.MENU);      
     }
 	// check for collision
         var res = me.game.collide(this);

@@ -11,6 +11,9 @@ var c = {
     "FOCUS_CANCEL"          : "abbrechen",
     "FOCUS_END"             : "end",
 
+    "PROFIL"     			:me.state.USER + 0,
+    "OPTIONS"				:me.state.USER + 1,
+
  
 };
 
