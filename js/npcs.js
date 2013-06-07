@@ -45,7 +45,7 @@ var ClassTeacherEntity = NPCEntity.extend({
         // set the default horizontal & vertical speed (accel vector)
         // adjust the bounding box
         this.username = "Klassenlehrerin";
-        this.playerLevel = 100;
+        this.playerLevel = 10;
         this.interactionImage = "class_player";
         
         this.setCurrentAnimation("down");
