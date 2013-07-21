@@ -1,6 +1,5 @@
 
-    
-       
+game.firstInit = true;
 
 
 /*-------------------
@@ -26,10 +25,14 @@ var PlayerEntity = me.ObjectEntity.extend({
 	this.addAnimation ("left", [3,4,5]);
 	this.addAnimation ("right", [6,7,8]);
 	this.addAnimation ("up", [9,10,11]);
- 
-    me.state.set(me.state.MENU, new MainMenu(this));
-    me.state.set(c.PROFIL, new ProfilSubMenu(this));
-    me.state.set(c.OPTIONS, new OptionsSubMenu(this));
+    if (game.firstInit){
+        me.state.set(me.state.MENU, new MainMenu(this));
+        me.state.set(c.PROFIL, new ProfilSubMenu(this));
+        me.state.set(c.OPTIONS, new OptionsSubMenu(this));
+        me.state.set(c.BAG, new BagSubMenu(this));
+        game.firstInit = false;
+    }
+
 	
 	 // Rachel's mass is always 1.
         //this.body.setMass(1);

@@ -13,7 +13,7 @@ var c = {
 
     "PROFIL"     			:me.state.USER + 0,
     "OPTIONS"				:me.state.USER + 1,
-
+ 	"BAG"					:me.state.USER + 2,
  
 };
 

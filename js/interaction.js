@@ -91,10 +91,13 @@ game.InteractionScreen = me.ScreenObject.extend(
                     this.sendPostRequest();
 
                     if (this.energypointsTeammate === 0) { 
-                        var gainPoints = this.getMoreKnowledge();
+                        var gainPoints = this.getMore();
+                        var gainMoney = this.getMore();
                         game.score = game.score + gainPoints;
+                        game.money = game.money + gainMoney;
                         this.newWidthGain(gainPoints);
                         this.winLoseMessage = "Gut gemacht, du gewinnst "+ gainPoints +" Wissenspunkte!";
+                        this.relexMessage = "Du sammelst "+ gainMoney +" Münzen ein!";
                         this.end();
                         this.sendPostRequest();
                         return;
@@ -225,7 +228,7 @@ game.InteractionScreen = me.ScreenObject.extend(
         return (Math.abs((game.level * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)))) + 1;
     },
  
-     "getMoreKnowledge" : function getMoreKnowledge(){
+     "getMore" : function getMore(){
         return (Math.abs((this.teammate.playerLevel * 2) + (Math.pow(-1,Math.round(Math.random())) * Math.round(Math.random() * 4)))) + 1;
     },
    
@@ -308,7 +311,7 @@ game.InteractionScreen = me.ScreenObject.extend(
         game.playtime = game.playtime + (Math.round(now.getTime()/1000) - game.startTime);
         game.startTime = Math.round(now.getTime()/1000);
         data = { "stats": {"level": game.level, "duration" : game.playtime, 
-        "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints, "score": game.score}};
+        "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints, "score": game.score, "money": game.money}};
         jQuery.post( "./elli/update_stats" ,data );
 
    },

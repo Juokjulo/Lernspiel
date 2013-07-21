@@ -108,12 +108,13 @@ MenuScreen = me.ScreenObject.extend(
         this.context.restore();
 
     },   
+
     "sendPostRequest" : function sendPostRequest(){
         var now = new Date();
         game.playtime = game.playtime + (Math.round(now.getTime()/1000) - game.startTime);
         game.startTime = Math.round(now.getTime()/1000);
         data = { "stats": {"level": game.level, "duration" : game.playtime, 
-        "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints, "score": game.score}};
+        "knowledge_points": game.knowledgePoints, "energy_points": game.energypoints, "score": game.score, "money": game.money}};
         jQuery.post( "./elli/update_stats" ,data );
 
    },
@@ -175,7 +176,7 @@ bag = new menuItem("Schultasche");
 save = new menuItem("Spiel speichern");
 highscore = new menuItem("Highscore");
 options = new menuItem("Einstellungen");
-endmenu = new menuItem("Menu verlassen");
+endmenu = new menuItem("Menü verlassen");
 showProfil.doAction = function (){
     me.state.change(c.PROFIL);
 };
@@ -183,6 +184,9 @@ showProfil.doAction = function (){
 highscore.doAction = function (){
     
             
+};
+bag.doAction = function (){
+    me.state.change(c.BAG);
 };
 
 options.doAction = function (){
@@ -210,7 +214,7 @@ MainMenu = MenuScreen.extend({
 
 });
 
-endSubmenu = new menuItem("Zum Hauptmenu");
+endSubmenu = new menuItem("Zum Hauptmenü");
       
 endSubmenu.doAction = function (){
     me.state.change(me.state.MENU);
@@ -297,9 +301,9 @@ ProfilSubMenu = MainMenu.extend({
         this.drawWords("lv:" + game.level , 420, 183,this.font);
         this.drawWords(game.energypoints + "/" + this.mainplayer.getEnergypoints(), 410, 240,this.font);
         this.drawWords(game.knowledgePoints + "/" + this.mainplayer.getMaxKnowledge(), 410, 271,this.font);
-        this.drawWords("Dein Titel: ", 300, 320,this.font);
-        this.drawWords(game.title, 300, 350,this.font);
-        this.drawWords("Score: " + game.score, 300, 380,this.font);
+        this.drawWords("Titel: " + game.title, 300, 320,this.font);
+        this.drawWords("Münzen: " + game.money, 300, 350,this.font);
+        this.drawWords("Punkte: " + game.score, 300, 380,this.font);
         this.drawWords("Spielzeit: " + this.getPlaytime(), 300, 410,this.font);
 
          this.drawLine(this.myEnergyArray[0],this.myEnergyArray[1], 
@@ -387,6 +391,27 @@ ProfilSubMenu = MainMenu.extend({
    
    
 });
+
+
+
+BagSubMenu = MenuScreen.extend({
+
+
+    "init": function init(mainplayer) {
+        this.menuItemArray = new MenuItemArray(50);
+    
+        this.menuItemArray.push([endSubmenu]);
+        // call the constructor
+        this.parent(mainplayer);
+    },
+
+  
+   
+   
+});
+
+
+
 
 
 

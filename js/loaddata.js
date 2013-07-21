@@ -114,6 +114,7 @@ game.loadFromDatabase = function loadFromDatabase(){
     game.level = this.database_resources.user.userLevel;
     game.knowledgePoints = this.database_resources.user.userKnowledgePoints;
     game.score = this.database_resources.user.userscore;
+    game.money = this.database_resources.user.money;
 
 }
 
