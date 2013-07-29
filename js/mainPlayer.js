@@ -30,6 +30,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         me.state.set(c.PROFIL, new ProfilSubMenu(this));
         me.state.set(c.OPTIONS, new OptionsSubMenu(this));
         me.state.set(c.BAG, new BagSubMenu(this));
+        me.state.set(me.state.SCORE, new ScoreSubMenu(this));
         game.firstInit = false;
     }
 

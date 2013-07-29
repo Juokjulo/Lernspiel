@@ -50,15 +50,15 @@ MenuScreen = me.ScreenObject.extend(
             this.menuItemArray.doAction(this.focus);
 
         } else if (me.input.isKeyPressed("left") || me.input.isKeyPressed("up") ) {
-        	if (!this.isfocusActiv){
-                this.focus--;
-                this.changeFocus(this.focus);
-            }
+        
+            this.focus--;
+            this.changeFocus(this.focus);
+            
         } else if (me.input.isKeyPressed("right") || me.input.isKeyPressed("down") ) {
-     		if (!this.isfocusActiv){
-                this.focus++;
-                this.changeFocus(this.focus);
-            }
+     		
+            this.focus++;
+            this.changeFocus(this.focus);
+            
         }
         return this.parent() || (this.fader !== -1);
     },
@@ -182,7 +182,7 @@ showProfil.doAction = function (){
 };
 
 highscore.doAction = function (){
-    
+    me.state.change(me.state.SCORE);
             
 };
 bag.doAction = function (){
@@ -391,29 +391,3 @@ ProfilSubMenu = MainMenu.extend({
    
    
 });
-
-
-
-BagSubMenu = MenuScreen.extend({
-
-
-    "init": function init(mainplayer) {
-        this.menuItemArray = new MenuItemArray(50);
-    
-        this.menuItemArray.push([endSubmenu]);
-        // call the constructor
-        this.parent(mainplayer);
-    },
-
-  
-   
-   
-});
-
-
-
-
-
-
-
-
